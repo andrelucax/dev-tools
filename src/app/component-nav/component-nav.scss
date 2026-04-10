@@ -12,17 +12,21 @@
   height: calc(100vh - 88px);
 
   &::before {
-        content: '';
-        position: absolute;
-        top: 8px;
-        bottom: 8px;
-        right: 0;
+      content: '';
+      position: absolute;
+      top: 8px;
+      bottom: 8px;
+      right: 0;
 
-        width: 1px;
-        background: var(--mat-sys-outline-variant);
-    }
+      width: 1px;
+      background: var(--mat-sys-outline-variant);
+  }
 
   @media (max-width: constants.$small-breakpoint-width) {
-    width: 100%;
+    width: calc(100% - 16px);
+
+    &::before {
+      display: none;
+    }
   }
 }
