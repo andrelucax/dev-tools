@@ -1,0 +1,31 @@
+<div class="layout-container">
+  <dt-navbar></dt-navbar>
+
+  <mat-sidenav-container class="sidenav-container">
+    <!-- If on small screen, menu resides in drawer -->
+    @if (isScreenSmall | async) {
+      <mat-sidenav #sidenav
+          [opened]="(isScreenSmall | async) === false"
+          [mode]="(isScreenSmall | async) ? 'over' : 'side'"
+          [fixedInViewport]="(isScreenSmall | async)"
+          [fixedTopGap]="56">
+        <dt-component-nav/>
+      </mat-sidenav>
+    }
+    <div>
+      <dt-component-header (toggleSidenav)="toggleSidenav()" />
+      <div class="sidenav-content">
+        <main class="sidenav-content-body">
+          <!-- If on large screen, menu resides to left of content -->
+          @if ((isScreenSmall | async) === false) {
+            <dt-component-nav/>
+          }
+          <div class="route-container">
+            <router-outlet />
+          </div>
+        </main>
+        <!-- <dt-footer /> -->
+      </div>
+    </div>
+  </mat-sidenav-container>
+</div>

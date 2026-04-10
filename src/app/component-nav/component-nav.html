@@ -1,0 +1,19 @@
+<div class="component-nav-container">
+  <div class="component-nav-content">
+    <mat-nav-list>
+      @for (item of items; track item) {
+        @if (item.externalRedirect) {
+          <a mat-list-item [href]="item.externalRedirect">{{item.name}}</a>
+        } @else {
+          <a mat-list-item #link="routerLinkActive"
+              [routerLink]="'/' + item.id"
+              [activated]="link.isActive"
+              routerLinkActive="dt-sidenav-item-selected"
+              [attr.aria-current]="link.isActive ? 'page': 'false'">
+            {{item.name}}
+          </a>
+        }
+      }
+    </mat-nav-list>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.sidenav-container {
+  margin-top: 56px;
+}
+
+.sidenav-content {
+  display: flex;
+}
+
+.sidenav-content-body {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.route-container {
+  padding: 20px 50px;
+}

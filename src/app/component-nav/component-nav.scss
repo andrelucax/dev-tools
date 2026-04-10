@@ -1,0 +1,28 @@
+@use '../styles/constants';
+
+.component-nav-container {
+  position: sticky;
+  top: 0;
+}
+
+.component-nav-content {
+  position: relative;
+  width: 240px;
+  padding: 16px 8px;
+  height: calc(100vh - 88px);
+
+  &::before {
+        content: '';
+        position: absolute;
+        top: 8px;
+        bottom: 8px;
+        right: 0;
+
+        width: 1px;
+        background: var(--mat-sys-outline-variant);
+    }
+
+  @media (max-width: constants.$small-breakpoint-width) {
+    width: 100%;
+  }
+}
