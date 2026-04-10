@@ -1,0 +1,20 @@
+.output-container {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--mat-sys-outline-variant);
+  user-select: all;
+  width: fit-content;
+}
+
+.output-text {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  color: var(--mat-sys-on-surface);
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: medium;
+}

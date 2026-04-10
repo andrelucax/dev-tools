@@ -1,0 +1,13 @@
+<div class="generator-container">
+  <form [formGroup]="form">
+    <mat-slide-toggle formControlName="mask">Apply mask</mat-slide-toggle>
+    <button mat-raised-button color="primary" type="button" (click)="generate()">
+      Generate
+    </button>
+  </form>
+  @if (output) {
+    <div class="output-container">
+      <dt-clipboard-output [output]="output"></dt-clipboard-output>
+    </div>
+  }
+</div>
