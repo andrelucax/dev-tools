@@ -6,11 +6,12 @@
           <a mat-list-item [href]="item.externalRedirect">{{item.name}}</a>
         } @else {
           <a mat-list-item #link="routerLinkActive"
-              [routerLink]="'/' + item.id"
-              [activated]="link.isActive"
-              routerLinkActive="dt-sidenav-item-selected"
-              [attr.aria-current]="link.isActive ? 'page': 'false'">
-            {{item.name}}
+            [routerLink]="'/' + item.id"
+            [activated]="link.isActive"
+            routerLinkActive="dt-sidenav-item-selected"
+            [attr.aria-current]="link.isActive ? 'page': 'false'">
+            <mat-icon matListItemIcon>{{item.icon}}</mat-icon>
+            <span matListItemTitle>{{item.name}}</span>
           </a>
         }
       }
