@@ -6,7 +6,7 @@ import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { map, Observable } from 'rxjs';
-import { NavigationFocusService } from '../shared/navigation-focus-service';
+import { NavigationFocusService } from '../shared/navigation-focus-service/navigation-focus-service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { AsyncPipe } from '@angular/common';
 import { ComponentNav } from '../component-nav/component-nav';

@@ -1,11 +1,11 @@
 import { Injectable, Type } from '@angular/core';
 import { Route } from '@angular/router';
-import { HashPage } from '../pages/hash-page/hash-page';
-import { GeneratorPage } from '../pages/generator-page/generator-page';
-import { LocationPage } from '../pages/location-page/location-page';
-import { UserAgentPage } from '../pages/user-agent-page/user-agent-page';
-import { ConverterPage } from '../pages/converter-page/converter-page';
-import { ClipboardPage } from '../pages/clipboard-page/clipboard-page';
+import { HashPage } from '../../pages/hash-page/hash-page';
+import { GeneratorPage } from '../../pages/generator-page/generator-page';
+import { LocationPage } from '../../pages/location-page/location-page';
+import { UserAgentPage } from '../../pages/user-agent-page/user-agent-page';
+import { ConverterPage } from '../../pages/converter-page/converter-page';
+import { ClipboardPage } from '../../pages/clipboard-page/clipboard-page';
 
 export interface ComponentItem {
   externalRedirect?: string;

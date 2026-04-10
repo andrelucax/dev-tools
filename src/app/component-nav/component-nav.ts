@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ComponentItems } from '../shared/component-items';
+import { ComponentItems } from '../shared/component-items/component-items';
 import { MatListModule } from '@angular/material/list';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';

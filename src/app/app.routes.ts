@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomePage } from './pages/home-page/home-page';
-import { COMPONENT_ITEMS_ROUTES } from './shared/component-items';
+import { COMPONENT_ITEMS_ROUTES } from './shared/component-items/component-items';
 
 export const routes: Routes = [
   {
