@@ -1,1 +1,10 @@
-<p>guid-generator works!</p>
+<div class="generator-container">
+  <button mat-raised-button color="primary" type="button" (click)="generate()">
+    Generate
+  </button>
+  @if (output) {
+    <div class="output-container">
+      <dt-clipboard-output [output]="output"></dt-clipboard-output>
+    </div>
+  }
+</div>
