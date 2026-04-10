@@ -69,7 +69,7 @@ export class CpfGenerator {
     this.output = this.cpf;
 
     if (mask) {
-      this.output = this.output.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+      this.output = this.output.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, "$1.$2.$3-$4");
     }
   }
 }
