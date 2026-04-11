@@ -1,0 +1,28 @@
+<form [formGroup]="form">
+  <div>
+    <h2>Input type</h2>
+    <mat-button-toggle-group formControlName="inputType" class="stretch input-type-selector">
+      <mat-button-toggle class="stretch" value="b64">Base64</mat-button-toggle>
+      <mat-button-toggle class="stretch" value="hex">Hex</mat-button-toggle>
+      <mat-button-toggle class="stretch" value="utf8">UTF-8</mat-button-toggle>
+      <mat-button-toggle class="stretch" value="file">File</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  @if (form.value.inputType == 'file') {
+    <!-- TODO -->
+  } @else {
+    <mat-form-field class="stretch">
+      <mat-label>Input</mat-label>
+      <textarea matInput formControlName="inputValue"></textarea>
+    </mat-form-field>
+  }
+
+  <div class="buttons-container">
+    <button [disabled]="submited" mat-raised-button color="primary" type="button" (click)="submit()">
+      {{submitButtonText}}
+    </button>
+    <button [disabled]="!submited" mat-raised-button color="primary" type="button" (click)="reset()">
+      Reset
+    </button>
+  </div>
+</form>
