@@ -30,14 +30,14 @@ export class HashPage {
 
   protected value?: string;
 
-  private input?: { value: string, type: InputSelectorTypes };
+  private input?: Uint8Array;
 
   protected form = this.fb.group({
     hashType: this.fb.control<HashTypes>('sha256', {
       nonNullable: true,
       validators: [Validators.required]
     }),
-    outputType: this.fb.control<OutputTypes>('b64', {
+    outputType: this.fb.control<OutputTypes>('hex', {
       nonNullable: true,
       validators: [Validators.required]
     }),
@@ -50,30 +50,32 @@ export class HashPage {
       if (!this.input) {
         return;
       }
-      this.computeHashByType(this.input.value, ht);
+      this.computeHashByType(this.input, ht);
     });
   }
 
-  private  async computeHashByType(value: string, type: HashTypes) {
+  private  async computeHashByType(bytes: Uint8Array, type: HashTypes) {
     this.loadingService.show();
 
     let hash: string;
     try {
       switch (type) {
         case 'md5':
-          hash = CryptoJS.MD5(value).toString().toUpperCase();
+          hash = CryptoJS.MD5(
+            CryptoJS.lib.WordArray.create(bytes)
+          ).toString().toUpperCase();
           break;
         case 'sha1':
-          hash = await this.sha1(value);
+          hash = await this.sha1(bytes);
           break;
         case 'sha256':
-          hash = await this.sha256(value);
+          hash = await this.sha256(bytes);
           break;
         case 'sha384':
-          hash = await this.sha384(value);
+          hash = await this.sha384(bytes);
           break;
         case 'sha512':
-          hash = await this.sha512(value);
+          hash = await this.sha512(bytes);
           break;
         default:
           throw new Error("Not implemented");
@@ -89,33 +91,64 @@ export class HashPage {
   }
 
   protected async setInputAndComputeHash(input: { value: string, type: InputSelectorTypes }) {
-    this.input = input;
-    return await this.computeHashByType(input.value, this.form.value.hashType!);
+    const bytes = this.toBytes(input);
+    this.input = bytes;
+    return await this.computeHashByType(bytes, this.form.value.hashType!);
+  }
+
+  private toBytes(input: { value: string, type: InputSelectorTypes }): Uint8Array {
+    switch (input.type) {
+      case 'utf8':
+        return new TextEncoder().encode(input.value);
+      case 'b64': {
+        const binary = atob(input.value);
+        return Uint8Array.from(binary, c => c.charCodeAt(0));
+      }
+      case 'hex':
+        return this.hexToBytes(input.value);
+      case 'file':
+        throw new Error("Not implemented yet");
+      default:
+        throw new Error("Not implemented");
+    }
+  }
+
+  private hexToBytes(hex: string): Uint8Array {
+    if (hex.length % 2 !== 0) {
+      throw new Error("Invalid hex string");
+    }
+
+    const bytes = new Uint8Array(hex.length / 2);
+
+    for (let i = 0; i < hex.length; i += 2) {
+      bytes[i / 2] = parseInt(hex.substring(i, i + 2), 16);
+    }
+
+    return bytes;
   }
 
   protected resetValue() {
     this.value = undefined;
   }
 
-  private async sha1(input: string): Promise<string> {
-    return await this.getHashValue(input, "SHA-1");
+  private async sha1(bytes: Uint8Array): Promise<string> {
+    return await this.getHashValue(bytes, "SHA-1");
   }
 
-  private async sha256(input: string): Promise<string> {
-    return await this.getHashValue(input, "SHA-256");
+  private async sha256(bytes: Uint8Array): Promise<string> {
+    return await this.getHashValue(bytes, "SHA-256");
   }
 
-  private async sha384(input: string): Promise<string> {
-    return await this.getHashValue(input, "SHA-384");
+  private async sha384(bytes: Uint8Array): Promise<string> {
+    return await this.getHashValue(bytes, "SHA-384");
   }
 
-  private async sha512(input: string): Promise<string> {
-    return await this.getHashValue(input, "SHA-512");
+  private async sha512(bytes: Uint8Array): Promise<string> {
+    return await this.getHashValue(bytes, "SHA-512");
   }
 
-  private async getHashValue(input: string, digest: AlgorithmIdentifier): Promise<string> {
-    const data = new TextEncoder().encode(input);
-    const hashBuffer = await crypto.subtle.digest(digest, data);
+  private async getHashValue(bytes: Uint8Array, digest: AlgorithmIdentifier): Promise<string> {
+    const hashBuffer = await crypto.subtle.digest(digest, new Uint8Array(bytes).slice().buffer);
     return this.bufferToHex(hashBuffer).toUpperCase();
   }
 
