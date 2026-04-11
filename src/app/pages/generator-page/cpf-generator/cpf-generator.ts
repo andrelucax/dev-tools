@@ -19,8 +19,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class CpfGenerator {
   private readonly fb = inject(FormBuilder);
 
-  private cpf: string = "";
-  protected output: string = "";
+  private cpf?: string;
+  protected output?: string;
 
   protected form = this.fb.group({
     mask: [true, Validators.required]

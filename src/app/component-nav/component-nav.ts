@@ -17,7 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class ComponentNav {
 
-  private _componentItems = inject(ComponentItems);
+  private componentItems = inject(ComponentItems);
 
-  protected items = this._componentItems.getItems();
+  protected items = this.componentItems.getItems();
 }

@@ -12,7 +12,7 @@ import { ClipboardOutput } from '../../../shared/clipboard-output/clipboard-outp
   styleUrl: './guid-generator.scss',
 })
 export class GuidGenerator {
-  protected output: string = "";
+  protected output?: string;
 
   protected generate() {
     this.output = crypto.randomUUID();

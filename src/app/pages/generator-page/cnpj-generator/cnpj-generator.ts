@@ -19,8 +19,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class CnpjGenerator {
   private readonly fb = inject(FormBuilder);
 
-  private cnpj: string = "";
-  protected output: string = "";
+  private cnpj?: string;
+  protected output?: string;
 
   protected form = this.fb.group({
     mask: [true, Validators.required],

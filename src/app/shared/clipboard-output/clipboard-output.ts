@@ -13,7 +13,7 @@ import { MessageService } from '../message-service/message-service';
   styleUrl: './clipboard-output.scss',
 })
 export class ClipboardOutput {
-  @Input({required: true}) output: string = "";
+  @Input({required: true}) output?: string;
 
   private readonly messageService = inject(MessageService);
 

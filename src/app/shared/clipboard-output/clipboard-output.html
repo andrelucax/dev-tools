@@ -1,4 +1,6 @@
 <div class="output-container">
-  <button mat-mini-fab (click)="copyToClipboard()"><mat-icon>content_copy</mat-icon></button>
-  <span class="output-text">{{output}}</span>
+  @if (output) {
+    <button mat-mini-fab (click)="copyToClipboard()"><mat-icon>content_copy</mat-icon></button>
+    <pre class="output-text">{{output}}</pre>
+  }
 </div>

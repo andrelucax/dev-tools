@@ -33,7 +33,7 @@ const SMALL_WIDTH_BREAKPOINT = 959;
 })
 export class Layout {
 
-  private _navigationFocusService = inject(NavigationFocusService);
+  private navigationFocusService = inject(NavigationFocusService);
 
   readonly sidenav = viewChild(MatSidenav);
 
@@ -46,7 +46,7 @@ export class Layout {
       .observe(`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`)
       .pipe(map(breakpoint => breakpoint.matches));
 
-    this._navigationFocusService.navigationEnd$
+    this.navigationFocusService.navigationEnd$
       .pipe(
         takeUntilDestroyed(),
         map(() => this.isScreenSmall),

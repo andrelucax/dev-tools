@@ -1,5 +1,7 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'dt-home-page',
@@ -12,5 +14,10 @@ import { ActivatedRoute, RouterOutlet } from '@angular/router';
 export class HomePage {
   private readonly route = inject(ActivatedRoute);
 
-  protected readonly hasChild = computed(() => this.route.firstChild);
+  protected readonly hasChild = toSignal(
+    this.route.url.pipe(
+      map(() => !!this.route.firstChild)
+    ),
+    { initialValue: !!this.route.firstChild }
+  );
 }

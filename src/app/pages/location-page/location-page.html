@@ -1,1 +1,13 @@
-WIP
+<button mat-raised-button color="primary" (click)="getLocation()">Get location</button>
+@if (printableData()) {
+  <div class="output-container">
+    <dt-clipboard-output [output]="printableData()"></dt-clipboard-output>
+  </div>
+}
+@if (mapUrl()) {
+  <iframe
+    [src]="mapUrl() | safeUrl"
+    class="map"
+    loading="lazy">
+  </iframe>
+}

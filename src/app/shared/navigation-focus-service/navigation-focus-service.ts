@@ -7,9 +7,9 @@ import { filter, Observable } from 'rxjs';
 })
 export class NavigationFocusService {
 
-  private _router = inject(Router);
+  private router = inject(Router);
 
-  readonly navigationEnd$: Observable<NavigationEnd> = this._router.events.pipe(
+  readonly navigationEnd$: Observable<NavigationEnd> = this.router.events.pipe(
     filter((event): event is NavigationEnd => event instanceof NavigationEnd),
   );
 }
