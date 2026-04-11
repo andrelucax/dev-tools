@@ -42,9 +42,31 @@ export class OutputSelector {
         return Converter.bufferToBase64(Converter.toBytes(this._value()));
       case 'hex':
         return Converter.bufferToHex(Converter.toBytes(this._value()));
+      case 'file':
+        return Converter.toBytes(this._value());
       default:
         throw new Error("Not implemented");
     }
+  });
+
+  protected outputStr = computed(() => {
+    const output = this.output();
+
+    if (typeof output !== 'string') {
+      throw new Error("Not implemented");
+    }
+
+    return output;
+  });
+
+  protected outputBuffer = computed(() => {
+    const output = this.output();
+
+    if (!(output instanceof Uint8Array)) {
+      throw new Error("Not implemented");
+    }
+
+    return output;
   });
 
   private readonly encodingTypes: { label: string; value: OutputEncodingFormat }[] = [
@@ -70,4 +92,21 @@ export class OutputSelector {
     this.form.controls.encodingType.valueChanges,
     { initialValue: this.form.controls.encodingType.value }
   );
+
+  downloadFile() {
+    const bytes = this.outputBuffer();
+
+    const blob = new Blob([bytes.slice().buffer], {
+      type: 'application/octet-stream',
+    });
+
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `converted-${Date.now()}.bin`;
+    a.click();
+
+    URL.revokeObjectURL(url);
+  }
 }
