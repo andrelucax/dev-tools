@@ -1,6 +1,6 @@
 import { Component, computed, EventEmitter, inject, Input, Output } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -55,6 +55,38 @@ export class InputSelector {
     inputFile: this.fb.control<string[] | null>(null)
   });
 
+  private hexValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value as string;
+
+      if (!value) return null;
+
+      return this.isValidHex(value) ? null : { invalidHex: true };
+    };
+  }
+
+  private base64Validator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value as string;
+
+      if (!value) return null;
+
+      return this.isValidBase64(value) ? null : { invalidBase64: true };
+    };
+  }
+
+  private isValidHex(value: string): boolean {
+    return /^[0-9a-fA-F]+$/.test(value) && value.length % 2 === 0;
+  }
+
+  private isValidBase64(value: string): boolean {
+    try {
+      return btoa(atob(value)) === value;
+    } catch {
+      return false;
+    }
+  }
+
   constructor() {
     this.form.controls.encodingType.valueChanges.pipe(
       takeUntilDestroyed()
@@ -63,7 +95,18 @@ export class InputSelector {
         this.form.controls.inputValue.clearValidators();
         this.form.controls.inputFile.setValidators([Validators.required]);
       } else {
-        this.form.controls.inputValue.setValidators([Validators.required]);
+        let validators = [Validators.required];
+
+        switch (v) {
+          case 'b64':
+            validators.push(this.base64Validator());
+            break;
+          case 'hex':
+            validators.push(this.hexValidator());
+            break;
+        }
+
+        this.form.controls.inputValue.setValidators(validators);
         this.form.controls.inputFile.clearValidators();
       }
       this.form.controls.inputValue.updateValueAndValidity();
