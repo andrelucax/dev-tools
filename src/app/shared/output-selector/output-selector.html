@@ -1,0 +1,19 @@
+<form [formGroup]="form">
+  <div>
+    <h3>Output type</h3>
+    <mat-button-toggle-group formControlName="encodingType" class="stretch output-type-selector">
+      @for (type of filteredEncodingTypes(); track type.value) {
+        <mat-button-toggle class="stretch" [value]="type.value">
+          {{ type.label }}
+        </mat-button-toggle>
+      }
+    </mat-button-toggle-group>
+  </div>
+  @if (form.controls.encodingType.value == 'file') {
+    File
+    <!-- <dt-files-input formControlName="inputFile" [single]="true"></dt-files-input> -->
+  } @else {
+    <h4>Output length: {{output().length}}</h4>
+    <dt-clipboard-output [output]="output()"></dt-clipboard-output>
+  }
+</form>

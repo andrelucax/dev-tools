@@ -1,15 +1,15 @@
 <form [formGroup]="form">
   <div>
     <h3>Input type</h3>
-    <mat-button-toggle-group formControlName="inputType" class="stretch input-type-selector">
-      @for (type of filteredInputTypes(); track type.value) {
+    <mat-button-toggle-group formControlName="encodingType" class="stretch input-type-selector">
+      @for (type of filteredEncodingTypes(); track type.value) {
         <mat-button-toggle class="stretch" [value]="type.value">
           {{ type.label }}
         </mat-button-toggle>
       }
     </mat-button-toggle-group>
   </div>
-  @if (form.controls.inputType.value == 'file') {
+  @if (form.controls.encodingType.value == 'file') {
     <dt-files-input formControlName="inputFile" [single]="true"></dt-files-input>
   } @else {
     <mat-form-field class="stretch">

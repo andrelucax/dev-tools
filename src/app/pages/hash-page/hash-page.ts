@@ -1,5 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { InputSelector, InputSelectorTypes } from '../../shared/input-selector/input-selector';
+import { InputSelector } from '../../shared/input-selector/input-selector';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ClipboardOutput } from '../../shared/clipboard-output/clipboard-output';
@@ -9,6 +9,7 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import * as CryptoJS from 'crypto-js';
 import { map, startWith } from 'rxjs';
 import { MatDividerModule } from '@angular/material/divider';
+import { Converter, EncodedInput } from '../../shared/converter/converter';
 
 type HashTypes = 'md5' | 'sha1' | 'sha256' | 'sha384' | 'sha512';
 type OutputTypes = 'hex' | 'b64';
@@ -38,7 +39,7 @@ export class HashPage {
     const outputType = this.outputType();
     switch (outputType) {
       case 'b64':
-        return this.hexToBase64(value);
+        return Converter.hexToBase64(value);
       case 'hex':
         return value;
       default:
@@ -113,42 +114,10 @@ export class HashPage {
     this.value.set(hash);
   }
 
-  protected async setInputAndComputeHash(input: { value: string, type: InputSelectorTypes }) {
-    const bytes = this.toBytes(input);
+  protected async setInputAndComputeHash(input: EncodedInput) {
+    const bytes = Converter.toBytes(input);
     this.input = bytes;
-    return await this.computeHashByType(bytes, this.form.value.hashType!);
-  }
-
-  private toBytes(input: { value: string, type: InputSelectorTypes }): Uint8Array {
-    switch (input.type) {
-      case 'utf8':
-        return new TextEncoder().encode(input.value);
-      case 'b64': {
-        const binary = atob(input.value);
-        return Uint8Array.from(binary, c => c.charCodeAt(0));
-      }
-      case 'hex':
-        return this.hexToBytes(input.value);
-      case 'file':
-        const binary = atob(input.value);
-        return Uint8Array.from(binary, c => c.charCodeAt(0));
-      default:
-        throw new Error("Not implemented");
-    }
-  }
-
-  private hexToBytes(hex: string): Uint8Array {
-    if (hex.length % 2 !== 0) {
-      throw new Error("Invalid hex string");
-    }
-
-    const bytes = new Uint8Array(hex.length / 2);
-
-    for (let i = 0; i < hex.length; i += 2) {
-      bytes[i / 2] = parseInt(hex.substring(i, i + 2), 16);
-    }
-
-    return bytes;
+    await this.computeHashByType(bytes, this.form.value.hashType!);
   }
 
   protected resetValue() {
@@ -173,26 +142,6 @@ export class HashPage {
 
   private async getHashValue(bytes: Uint8Array, digest: AlgorithmIdentifier): Promise<string> {
     const hashBuffer = await crypto.subtle.digest(digest, new Uint8Array(bytes).slice().buffer);
-    return this.bufferToHex(hashBuffer).toUpperCase();
-  }
-
-  private bufferToHex(buffer: ArrayBuffer): string {
-    const bytes = new Uint8Array(buffer);
-
-    let hex = '';
-    for (let i = 0; i < bytes.length; i++) {
-      hex += bytes[i].toString(16).padStart(2, '0');
-    }
-
-    return hex;
-  }
-
-  private hexToBase64(hex: string) {
-    const bytes = this.hexToBytes(hex);
-
-    let binary = '';
-    bytes.forEach(b => binary += String.fromCharCode(b));
-
-    return btoa(binary);
+    return Converter.bufferToHex(hashBuffer).toUpperCase();
   }
 }

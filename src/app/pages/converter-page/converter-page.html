@@ -1,2 +1,12 @@
 <h1>Convertor</h1>
 <mat-divider></mat-divider>
+
+<dt-input-selector
+  (valueSubmited)="setInput($event)"
+  (valueReseted)="resetInput()"
+  submitButtonText="Convert"
+></dt-input-selector>
+
+@if (value()) {
+  <dt-output-selector [value]="value()!"></dt-output-selector>
+}
