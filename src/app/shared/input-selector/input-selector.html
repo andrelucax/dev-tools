@@ -1,6 +1,6 @@
 <form [formGroup]="form">
   <div>
-    <h2>Input type</h2>
+    <h3>Input type</h3>
     <mat-button-toggle-group formControlName="inputType" class="stretch input-type-selector">
       @for (type of filteredInputTypes(); track type.value) {
         <mat-button-toggle class="stretch" [value]="type.value">

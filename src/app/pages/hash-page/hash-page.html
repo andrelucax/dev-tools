@@ -7,7 +7,7 @@
 @if (value()) {
   <form [formGroup]="form">
     <div>
-      <h2>Hash algorithm</h2>
+      <h3>Hash algorithm</h3>
       <mat-button-toggle-group formControlName="hashType" class="stretch input-type-selector">
         <mat-button-toggle class="stretch" value="md5">MD5</mat-button-toggle>
         <mat-button-toggle class="stretch" value="sha1">SHA-1</mat-button-toggle>
@@ -18,7 +18,7 @@
     </div>
 
     <div>
-      <h2>Output type</h2>
+      <h3>Output type</h3>
       <mat-button-toggle-group formControlName="outputType" class="stretch input-type-selector">
         <mat-button-toggle class="stretch" value="hex">HEX</mat-button-toggle>
         <mat-button-toggle class="stretch" value="b64">Base64</mat-button-toggle>
