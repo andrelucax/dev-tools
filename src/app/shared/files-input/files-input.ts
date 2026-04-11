@@ -1,5 +1,5 @@
-import { Component, forwardRef, inject, Input } from '@angular/core';
-import { FormBuilder, FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor, NgControl } from '@angular/forms';
+import { Component, inject, Input } from '@angular/core';
+import { FormBuilder, FormControl, ControlValueAccessor, NgControl } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -8,13 +8,6 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [
     MatButtonModule,
     MatIconModule
-  ],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => FilesInput),
-      multi: true
-    }
   ],
   templateUrl: './files-input.html',
   styleUrl: './files-input.scss',
@@ -62,7 +55,24 @@ export class FilesInput implements ControlValueAccessor {
     this.setFileUpdated(this.form.value.files ?? null);
   }
 
+  fileTouched() {
+    this.onTouched();
+  }
+
   //#region ControlValueAccessor
+
+  private readonly ngControl = inject(NgControl, { self: true, optional: true });
+
+  get invalid() {
+    const c = this.ngControl?.control;
+    return !!c && c.invalid && (c.touched || c.dirty);
+  }
+
+  constructor() {
+    if (this.ngControl) {
+      this.ngControl.valueAccessor = this;
+    }
+  }
 
   private onChange: (value: string[] | null) => void = () => { };
   private onTouched: () => void = () => { };
@@ -93,7 +103,6 @@ export class FilesInput implements ControlValueAccessor {
       this.writeValue(null);
     }
     this.onChange(this.value);
-    this.onTouched();
   }
 
   private toBase64(files: File[]) {

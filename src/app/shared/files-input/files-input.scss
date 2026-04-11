@@ -16,13 +16,25 @@
   color: var(--mat-form-field-filled-input-text-color, var(--mat-sys-on-surface));
   caret-color: var(--mat-form-field-filled-caret-color, var(--mat-sys-primary));
 
+  &.enabled:hover {
+    box-shadow: inset 0 0 0 1px var(--mat-sys-primary);
+  }
+
+  &.invalid {
+    border: 1px solid var(--mat-form-field-filled-error-caret-color, var(--mat-sys-error));
+
+    &.enabled:hover {
+      box-shadow: inset 0 0 0 2px var(--mat-sys-error);
+    }
+  }
+
   &.disabled {
     cursor: auto;
     background-color: var(--mat-form-field-filled-disabled-container-color, color-mix(in srgb, var(--mat-sys-on-surface) 4%, transparent));
     color: var(--mat-form-field-filled-disabled-input-text-color, color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent));
   }
 
-  &.enabled {
+  &.enabled:not(.invalid) {
     &:hover {
       border-color: var(--mat-sys-primary);
 

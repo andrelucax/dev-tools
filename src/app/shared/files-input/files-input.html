@@ -3,11 +3,11 @@
 }
 
 <div class="file-input">
-  <label class="file-box" [class.disabled]="disabled" [class.enabled]="!disabled">
+  <label class="file-box" [class.disabled]="disabled" [class.enabled]="!disabled" [class.invalid]="invalid">
 
     <div class="file-box-overlay"></div>
 
-    <input [disabled]="disabled" type="file" [multiple]="!single" (change)="fileSelected($event)" class="hidden" />
+    <input [disabled]="disabled" type="file" [multiple]="!single" (click)="fileTouched()" (change)="fileSelected($event)" class="hidden" />
 
     <div class="file-content">
       @if (form.value.files && form.value.files.length > 0) {
