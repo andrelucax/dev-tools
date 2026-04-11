@@ -3,7 +3,12 @@
 }
 
 <div class="file-input">
-  <label class="file-box" [class.disabled]="disabled" [class.enabled]="!disabled" [class.invalid]="invalid">
+  <label class="file-box"
+    [class.disabled]="disabled"
+    [class.enabled]="!disabled"
+    [class.invalid]="invalid"
+    dtDragAndDrop
+    (filesDropped)="onFilesDropped($event)">
 
     <div class="file-box-overlay"></div>
 
@@ -16,7 +21,7 @@
             <span class="file-item">
               {{ file.name }}
               <button [disabled]="disabled" type="button" (click)="removeFile(i)" mat-icon-button>
-                <mat-icon color="warn">
+                <mat-icon [color]="disabled ? null : 'warn'">
                   delete
                 </mat-icon>
               </button>

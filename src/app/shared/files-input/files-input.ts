@@ -2,12 +2,14 @@ import { Component, inject, Input } from '@angular/core';
 import { FormBuilder, FormControl, ControlValueAccessor, NgControl } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { DragAndDrop } from './drag-and-drop';
 
 @Component({
   selector: 'dt-files-input',
   imports: [
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    DragAndDrop
   ],
   templateUrl: './files-input.html',
   styleUrl: './files-input.scss',
@@ -30,6 +32,11 @@ export class FilesInput implements ControlValueAccessor {
 
     const files = Array.from(input.files);
 
+    input.value = '';
+    await this.selectFiles(files);
+  }
+
+  private async selectFiles(files: File[]) {
     if (this.single) {
       this.form.controls.files.clear();
       const file = files[0];
@@ -46,7 +53,6 @@ export class FilesInput implements ControlValueAccessor {
       }
     }
 
-    input.value = '';
     await this.setFileUpdated(this.form.value.files!);
   }
 
@@ -58,6 +64,14 @@ export class FilesInput implements ControlValueAccessor {
   fileTouched() {
     this.onTouched();
   }
+
+  //#region DragAndDrop
+
+  async onFilesDropped(files: File[]) {
+    await this.selectFiles(files);
+  }
+
+  //#endregion
 
   //#region ControlValueAccessor
 
