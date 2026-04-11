@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { LoadingService } from '../loading-service/loading-service';
 
 @Component({
@@ -9,4 +9,6 @@ import { LoadingService } from '../loading-service/loading-service';
 })
 export class Loading {
   protected readonly loadingService = inject(LoadingService);
+
+  @Input({ required: true }) loading: boolean = false;
 }
