@@ -1,4 +1,4 @@
-import { Component, computed, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, computed, EventEmitter, inject, Input, Output, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -28,14 +28,20 @@ export class OutputSelector {
   @Output() valueSubmited = new EventEmitter<EncodedOutput>();
   @Output() valueReseted = new EventEmitter<null>();
   @Input() allowedTypes: OutputEncodingFormat[] = ['hex', 'b64', 'file'];
-  @Input({ required: true }) value!: EncodedInput;
+
+  private _value = signal<EncodedInput>(null as any);
+
+  @Input()
+  set value(v: EncodedInput) {
+    this._value.set(v);
+  }
 
   protected output = computed(() => {
     switch (this.encodingType()) {
       case 'b64':
-        return Converter.bufferToBase64(Converter.toBytes(this.value));
+        return Converter.bufferToBase64(Converter.toBytes(this._value()));
       case 'hex':
-        return Converter.bufferToHex(Converter.toBytes(this.value));
+        return Converter.bufferToHex(Converter.toBytes(this._value()));
       default:
         throw new Error("Not implemented");
     }

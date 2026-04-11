@@ -19,17 +19,10 @@
         <mat-button-toggle class="stretch" value="sha512">SHA-512</mat-button-toggle>
       </mat-button-toggle-group>
     </div>
-
-    <div>
-      <h3>Output type</h3>
-      <mat-button-toggle-group formControlName="outputType" class="stretch input-type-selector">
-        <mat-button-toggle class="stretch" value="hex">HEX</mat-button-toggle>
-        <mat-button-toggle class="stretch" value="b64">Base64</mat-button-toggle>
-      </mat-button-toggle-group>
-    </div>
   </form>
 
-  <div class="output-container">
-    <dt-clipboard-output [output]="outputValue()"></dt-clipboard-output>
-  </div>
+  <dt-output-selector
+    [allowedTypes]="['hex', 'b64']"
+    [value]="outputValue()"
+  ></dt-output-selector>
 }

@@ -2,17 +2,15 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { InputSelector } from '../../shared/input-selector/input-selector';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ClipboardOutput } from '../../shared/clipboard-output/clipboard-output';
 import { LoadingService } from '../../shared/loading-service/loading-service';
 import { MessageService } from '../../shared/message-service/message-service';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import * as CryptoJS from 'crypto-js';
-import { map, startWith } from 'rxjs';
 import { MatDividerModule } from '@angular/material/divider';
 import { Converter, EncodedInput } from '../../shared/converter/converter';
+import { OutputSelector } from '../../shared/output-selector/output-selector';
 
 type HashTypes = 'md5' | 'sha1' | 'sha256' | 'sha384' | 'sha512';
-type OutputTypes = 'hex' | 'b64';
 
 @Component({
   selector: 'dt-hash-page',
@@ -20,8 +18,8 @@ type OutputTypes = 'hex' | 'b64';
     InputSelector,
     MatButtonToggleModule,
     ReactiveFormsModule,
-    ClipboardOutput,
-    MatDividerModule
+    MatDividerModule,
+    OutputSelector
   ],
   templateUrl: './hash-page.html',
   styleUrl: './hash-page.scss',
@@ -36,15 +34,11 @@ export class HashPage {
 
   protected outputValue = computed(() => {
     const value = this.value();
-    const outputType = this.outputType();
-    switch (outputType) {
-      case 'b64':
-        return Converter.hexToBase64(value);
-      case 'hex':
-        return value;
-      default:
-        throw new Error("Not implemented");
+    const output: EncodedInput = {
+      value: value,
+      encoding: 'hex'
     }
+    return output;
   });
 
   private input?: Uint8Array;
@@ -53,19 +47,8 @@ export class HashPage {
     hashType: this.fb.control<HashTypes>('sha256', {
       nonNullable: true,
       validators: [Validators.required]
-    }),
-    outputType: this.fb.control<OutputTypes>('hex', {
-      nonNullable: true,
-      validators: [Validators.required]
-    }),
+    })
   });
-
-  protected outputType = toSignal(
-    this.form.valueChanges.pipe(
-      map(v => v.outputType),
-      startWith(this.form.value.outputType)
-    )
-  );
 
   constructor() {
     this.form.controls.hashType.valueChanges.pipe(
@@ -78,7 +61,7 @@ export class HashPage {
     });
   }
 
-  private  async computeHashByType(bytes: Uint8Array, type: HashTypes) {
+  private async computeHashByType(bytes: Uint8Array, type: HashTypes) {
     this.loadingService.show();
 
     let hash: string;
