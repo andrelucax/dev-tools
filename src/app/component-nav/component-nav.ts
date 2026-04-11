@@ -3,6 +3,7 @@ import { ComponentItems } from '../shared/component-items/component-items';
 import { MatListModule } from '@angular/material/list';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'dt-component-nav',
@@ -10,7 +11,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatListModule,
     RouterLink,
     RouterLinkActive,
-    MatIconModule
+    MatIconModule,
+    MatTooltip
   ],
   templateUrl: './component-nav.html',
   styleUrl: './component-nav.scss',

@@ -12,6 +12,13 @@
             [attr.aria-current]="link.isActive ? 'page': 'false'">
             <mat-icon matListItemIcon>{{item.icon}}</mat-icon>
             <span matListItemTitle>{{item.name}}</span>
+            @if (item.requiresServer) {
+              <div matListItemMeta matTooltip="Requires server communication">
+                <mat-icon>
+                  policy_alert
+                </mat-icon>
+              </div>
+            }
           </a>
         }
       }

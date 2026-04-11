@@ -12,6 +12,7 @@ export interface ComponentItem {
   name: string;
   id: string;
   icon: string;
+  requiresServer?: boolean;
   component: Type<any>;
 }
 
@@ -20,19 +21,21 @@ const ITEMS: ComponentItem[] = [
     name: 'Clipboard',
     id: 'clipboard',
     icon: "copy_all",
+    requiresServer: true,
     component: ClipboardPage
+  },
+  {
+    name: 'User-Agent',
+    id: 'user-agent',
+    icon: "language",
+    requiresServer: true,
+    component: UserAgentPage
   },
   {
     name: 'Converter',
     id: 'converter',
     icon: "swap_horiz",
     component: ConverterPage
-  },
-  {
-    name: 'User-Agent',
-    id: 'user-agent',
-    icon: "language",
-    component: UserAgentPage
   },
   {
     name: 'Location',
