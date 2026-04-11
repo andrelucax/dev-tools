@@ -1,5 +1,5 @@
-import { Component, inject, Input } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { Component, forwardRef, inject, Input } from '@angular/core';
+import { FormBuilder, FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor, NgControl } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -9,10 +9,17 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatIconModule
   ],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => FilesInput),
+      multi: true
+    }
+  ],
   templateUrl: './files-input.html',
   styleUrl: './files-input.scss',
 })
-export class FilesInput {
+export class FilesInput implements ControlValueAccessor {
 
   private readonly fb = inject(FormBuilder);
 
@@ -23,7 +30,7 @@ export class FilesInput {
     files: this.fb.array<FormControl<File>>([])
   });
 
-  fileSelected(event: Event) {
+  async fileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
 
     if (!input.files) return;
@@ -47,9 +54,66 @@ export class FilesInput {
     }
 
     input.value = '';
+    await this.setFileUpdated(this.form.value.files!);
   }
 
   removeFile(index: number) {
     this.form.controls.files.removeAt(index);
+    this.setFileUpdated(this.form.value.files ?? null);
   }
+
+  //#region ControlValueAccessor
+
+  private onChange: (value: string[] | null) => void = () => { };
+  private onTouched: () => void = () => { };
+  protected disabled = false;
+
+  value: string[] | null = null;
+
+  writeValue(value: string[] | null): void {
+    this.value = value ?? null;
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState?(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
+
+  private async setFileUpdated(files: File[] | null) {
+    if (files) {
+      this.writeValue(await this.toBase64(files));
+    } else {
+      this.writeValue(null);
+    }
+    this.onChange(this.value);
+    this.onTouched();
+  }
+
+  private toBase64(files: File[]) {
+    return Promise.all(files.map(f => this.fileToBase64(f)));
+  }
+
+  private fileToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        const result = reader.result as string;
+        resolve(result.split(',')[1]);
+      };
+
+      reader.onerror = reject;
+    });
+  }
+
+  // #endregion
 }

@@ -53,7 +53,7 @@ export class InputSelector {
       nonNullable: true,
       validators: [Validators.required]
     }),
-    inputFile: this.fb.control<File | null>(null)
+    inputFile: this.fb.control<string[] | null>(null)
   });
 
   constructor() {
@@ -67,6 +67,8 @@ export class InputSelector {
         this.form.controls.inputValue.setValidators([Validators.required]);
         this.form.controls.inputFile.clearValidators();
       }
+      this.form.controls.inputValue.updateValueAndValidity();
+      this.form.controls.inputFile.updateValueAndValidity();
     })
   }
 
@@ -77,13 +79,21 @@ export class InputSelector {
     }
 
     let value = this.form.value.inputValue!;
-    if (this.form.value.inputType == 'file') {
-      // TODO
+    const inputType = this.form.value.inputType!;
+    if (inputType == 'file') {
+      const file = this.form.value.inputFile?.[0];
+
+      if (!file) {
+        this.form.markAllAsTouched();
+        return;
+      }
+
+      value = file;
     }
 
     this.form.disable();
     this.submited = true;
-    this.valueSubmited.emit({ value: value, type: this.form.value.inputType! });
+    this.valueSubmited.emit({ value: value, type: inputType });
   }
 
   protected reset() {

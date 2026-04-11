@@ -3,11 +3,11 @@
 }
 
 <div class="file-input">
-  <label class="file-box">
+  <label class="file-box" [class.disabled]="disabled" [class.enabled]="!disabled">
 
     <div class="file-box-overlay"></div>
 
-    <input type="file" [multiple]="!single" (change)="fileSelected($event)" class="hidden" />
+    <input [disabled]="disabled" type="file" [multiple]="!single" (change)="fileSelected($event)" class="hidden" />
 
     <div class="file-content">
       @if (form.value.files && form.value.files.length > 0) {
@@ -15,7 +15,7 @@
           @for (file of form.value.files; track $index; let i = $index) {
             <span class="file-item">
               {{ file.name }}
-              <button type="button" (click)="removeFile(i)" mat-icon-button>
+              <button [disabled]="disabled" type="button" (click)="removeFile(i)" mat-icon-button>
                 <mat-icon color="warn">
                   delete
                 </mat-icon>

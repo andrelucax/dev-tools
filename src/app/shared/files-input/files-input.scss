@@ -13,18 +13,28 @@
   cursor: pointer;
   transition: 0.2s ease;
   background-color: var(--mat-form-field-filled-container-color, var(--mat-sys-surface-variant));
+  color: var(--mat-form-field-filled-input-text-color, var(--mat-sys-on-surface));
+  caret-color: var(--mat-form-field-filled-caret-color, var(--mat-sys-primary));
 
-  &:hover {
-    border-color: var(--mat-sys-primary);
+  &.disabled {
+    cursor: auto;
+    background-color: var(--mat-form-field-filled-disabled-container-color, color-mix(in srgb, var(--mat-sys-on-surface) 4%, transparent));
+    color: var(--mat-form-field-filled-disabled-input-text-color, color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent));
+  }
 
-    .file-box-overlay {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background-color: var(--mat-form-field-state-layer-color, var(--mat-sys-on-surface));
-      opacity: var(--mat-form-field-hover-state-layer-opacity, var(--mat-sys-hover-state-layer-opacity));
+  &.enabled {
+    &:hover {
+      border-color: var(--mat-sys-primary);
+
+      .file-box-overlay {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: var(--mat-form-field-state-layer-color, var(--mat-sys-on-surface));
+        opacity: var(--mat-form-field-hover-state-layer-opacity, var(--mat-sys-hover-state-layer-opacity));
+      }
     }
   }
 }

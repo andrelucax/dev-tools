@@ -128,7 +128,8 @@ export class HashPage {
       case 'hex':
         return this.hexToBytes(input.value);
       case 'file':
-        throw new Error("Not implemented yet");
+        const binary = atob(input.value);
+        return Uint8Array.from(binary, c => c.charCodeAt(0));
       default:
         throw new Error("Not implemented");
     }
