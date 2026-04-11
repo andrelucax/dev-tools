@@ -1,12 +1,13 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { InputSelector, InputSelectorTypes } from '../../shared/input-selector/input-selector';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ClipboardOutput } from '../../shared/clipboard-output/clipboard-output';
 import { LoadingService } from '../../shared/loading-service/loading-service';
 import { MessageService } from '../../shared/message-service/message-service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import * as CryptoJS from 'crypto-js';
+import { map, startWith } from 'rxjs';
 
 type HashTypes = 'md5' | 'sha1' | 'sha256' | 'sha384' | 'sha512';
 type OutputTypes = 'hex' | 'b64';
@@ -28,7 +29,20 @@ export class HashPage {
   private readonly loadingService = inject(LoadingService);
   private readonly messageService = inject(MessageService);
 
-  protected value?: string;
+  protected value = signal<string>("");
+
+  protected outputValue = computed(() => {
+    const value = this.value();
+    const outputType = this.outputType();
+    switch (outputType) {
+      case 'b64':
+        return this.hexToBase64(value);
+      case 'hex':
+        return value;
+      default:
+        throw new Error("Not implemented");
+    }
+  });
 
   private input?: Uint8Array;
 
@@ -42,6 +56,13 @@ export class HashPage {
       validators: [Validators.required]
     }),
   });
+
+  protected outputType = toSignal(
+    this.form.valueChanges.pipe(
+      map(v => v.outputType),
+      startWith(this.form.value.outputType)
+    )
+  );
 
   constructor() {
     this.form.controls.hashType.valueChanges.pipe(
@@ -87,7 +108,7 @@ export class HashPage {
       this.loadingService.hide();
     }
 
-    this.value = hash;
+    this.value.set(hash);
   }
 
   protected async setInputAndComputeHash(input: { value: string, type: InputSelectorTypes }) {
@@ -128,7 +149,7 @@ export class HashPage {
   }
 
   protected resetValue() {
-    this.value = undefined;
+    this.value.set("");
   }
 
   private async sha1(bytes: Uint8Array): Promise<string> {
@@ -161,5 +182,14 @@ export class HashPage {
     }
 
     return hex;
+  }
+
+  private hexToBase64(hex: string) {
+    const bytes = this.hexToBytes(hex);
+
+    let binary = '';
+    bytes.forEach(b => binary += String.fromCharCode(b));
+
+    return btoa(binary);
   }
 }

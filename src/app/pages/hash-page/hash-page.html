@@ -4,7 +4,7 @@
   submitButtonText="Compute hash"
 ></dt-input-selector>
 
-@if (value) {
+@if (value()) {
   <form [formGroup]="form">
     <div>
       <h2>Hash algorithm</h2>
@@ -27,6 +27,6 @@
   </form>
 
   <div class="output-container">
-    <dt-clipboard-output [output]="value"></dt-clipboard-output>
+    <dt-clipboard-output [output]="outputValue()"></dt-clipboard-output>
   </div>
 }
