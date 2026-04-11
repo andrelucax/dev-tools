@@ -4,6 +4,7 @@ import { MatListModule } from '@angular/material/list';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'dt-component-nav',
@@ -12,7 +13,8 @@ import { MatTooltip } from '@angular/material/tooltip';
     RouterLink,
     RouterLinkActive,
     MatIconModule,
-    MatTooltip
+    MatTooltip,
+    CommonModule
   ],
   templateUrl: './component-nav.html',
   styleUrl: './component-nav.scss',
@@ -21,5 +23,6 @@ export class ComponentNav {
 
   private componentItems = inject(ComponentItems);
 
-  protected items = this.componentItems.getItems();
+  protected items = this.componentItems.getItems()
+    .sort(i => i.requiresServer ? 1 : 0);
 }

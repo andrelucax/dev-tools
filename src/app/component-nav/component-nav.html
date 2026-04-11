@@ -1,27 +1,62 @@
 <div class="component-nav-container">
   <div class="component-nav-content">
     <mat-nav-list>
-      @for (item of items; track item.id) {
+
+      <a
+        mat-list-item
+        #link="routerLinkActive"
+        [routerLink]="'/'"
+        routerLinkActive="dt-sidenav-item-selected"
+        [routerLinkActiveOptions]="{ exact: true }"
+        [activated]="link.isActive">
+
+        <mat-icon matListItemIcon>home</mat-icon>
+        <span matListItemTitle>Home</span>
+      </a>
+
+      <mat-divider class="list-divider"></mat-divider>
+
+      @for (item of items; track item.id; let i = $index) {
         @if (item.externalRedirect) {
-          <a mat-list-item [href]="item.externalRedirect">{{item.name}}</a>
+          <ng-container
+            *ngTemplateOutlet="externalItem; context: { $implicit: item }">
+          </ng-container>
         } @else {
-          <a mat-list-item #link="routerLinkActive"
-            [routerLink]="'/' + item.id"
-            [activated]="link.isActive"
-            routerLinkActive="dt-sidenav-item-selected"
-            [attr.aria-current]="link.isActive ? 'page': 'false'">
-            <mat-icon matListItemIcon>{{item.icon}}</mat-icon>
-            <span matListItemTitle>{{item.name}}</span>
-            @if (item.requiresServer) {
-              <div matListItemMeta matTooltip="Requires server communication">
-                <mat-icon>
-                  policy_alert
-                </mat-icon>
-              </div>
-            }
-          </a>
+          <ng-container
+            *ngTemplateOutlet="internalItem; context: { $implicit: item }">
+          </ng-container>
         }
       }
     </mat-nav-list>
   </div>
 </div>
+
+<ng-template #externalItem let-item>
+  <a mat-list-item [href]="item.externalRedirect">
+    {{ item.name }}
+  </a>
+</ng-template>
+
+<ng-template #internalItem let-item>
+  <a
+    mat-list-item
+    #link="routerLinkActive"
+    [routerLink]="'/' + item.id"
+    [activated]="link.isActive"
+    routerLinkActive="dt-sidenav-item-selected"
+    [attr.aria-current]="link.isActive ? 'page' : 'false'">
+
+    <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+
+    <span matListItemTitle>{{ item.name }}</span>
+
+    @if (item.requiresServer) {
+      <div
+        class="server-warning-container"
+        matListItemMeta
+        matTooltip="Requires server communication">
+        <mat-icon>policy_alert</mat-icon>
+      </div>
+    }
+  </a>
+</ng-template>
