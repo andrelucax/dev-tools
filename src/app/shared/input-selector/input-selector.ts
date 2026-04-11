@@ -1,10 +1,11 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, computed, EventEmitter, inject, Input, Output } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { FilesInput } from '../files-input/files-input';
 
 export type InputSelectorTypes = 'utf8' | 'b64' | 'hex' | 'file';
 
@@ -15,7 +16,8 @@ export type InputSelectorTypes = 'utf8' | 'b64' | 'hex' | 'file';
     MatFormFieldModule,
     MatInputModule,
     MatButtonToggleModule,
-    MatButtonModule
+    MatButtonModule,
+    FilesInput
   ],
   templateUrl: './input-selector.html',
   styleUrl: './input-selector.scss',
@@ -28,6 +30,17 @@ export class InputSelector {
   @Output() valueReseted = new EventEmitter<null>();
   @Input() allowedTypes: InputSelectorTypes[] = ['utf8', 'b64', 'hex', 'file'];
   @Input() submitButtonText = "Submit";
+
+  private readonly inputTypes: { label: string; value: InputSelectorTypes }[] = [
+    { label: 'Base64', value: 'b64' },
+    { label: 'Hex', value: 'hex' },
+    { label: 'UTF-8', value: 'utf8' },
+    { label: 'File', value: 'file' }
+  ];
+
+  filteredInputTypes = computed(() =>
+    this.inputTypes.filter(t => this.allowedTypes.includes(t.value))
+  );
 
   protected submited = false;
 

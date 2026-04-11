@@ -1,0 +1,41 @@
+@if (label) {
+  <div class="file-label">{{ label }}</div>
+}
+
+<div class="file-input">
+  <label class="file-box">
+
+    <div class="file-box-overlay"></div>
+
+    <input type="file" [multiple]="!single" (change)="fileSelected($event)" class="hidden" />
+
+    <div class="file-content">
+      @if (form.value.files && form.value.files.length > 0) {
+        <div class="file-list">
+          @for (file of form.value.files; track $index; let i = $index) {
+            <span class="file-item">
+              {{ file.name }}
+              <button type="button" (click)="removeFile(i)" mat-icon-button>
+                <mat-icon color="warn">
+                  delete
+                </mat-icon>
+              </button>
+            </span>
+          }
+        </div>
+      } @else {
+        <div class="file-placeholder">
+          @if (single) {
+            Click or drag and drop to select file
+          } @else {
+            Click or drag and drop to select files
+          }
+        </div>
+      }
+
+    </div>
+
+  </label>
+</div>
+
+

@@ -1,7 +1,7 @@
 <div class="component-nav-container">
   <div class="component-nav-content">
     <mat-nav-list>
-      @for (item of items; track item) {
+      @for (item of items; track item.id) {
         @if (item.externalRedirect) {
           <a mat-list-item [href]="item.externalRedirect">{{item.name}}</a>
         } @else {

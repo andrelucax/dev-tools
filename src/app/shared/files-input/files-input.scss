@@ -1,0 +1,71 @@
+.file-input {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.file-box {
+  position: relative;
+  display: block;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 8px;
+  padding: 12px;
+  min-height: 150px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  background-color: var(--mat-form-field-filled-container-color, var(--mat-sys-surface-variant));
+
+  &:hover {
+    border-color: var(--mat-sys-primary);
+
+    .file-box-overlay {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: var(--mat-form-field-state-layer-color, var(--mat-sys-on-surface));
+      opacity: var(--mat-form-field-hover-state-layer-opacity, var(--mat-sys-hover-state-layer-opacity));
+    }
+  }
+}
+
+.file-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 150px;
+}
+
+.file-label {
+  font-size: 16px;
+  color: var(--mat-sys-primary);
+  font-weight: 500;
+}
+
+.file-placeholder {
+  font-size: 14px;
+  color: var(--mat-sys-on-surface-variant);
+  display: flex;
+  justify-content: center;
+  min-height: 150px;
+  align-items: center;
+}
+
+.file-list {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.file-item {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--mat-sys-outline-variant);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 24px;
+}
