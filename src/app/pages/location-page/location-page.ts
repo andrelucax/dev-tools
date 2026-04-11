@@ -4,6 +4,7 @@ import { LocationData, LocationService } from '../../shared/location-service/loc
 import { MessageService } from '../../shared/message-service/message-service';
 import { ClipboardOutput } from '../../shared/clipboard-output/clipboard-output';
 import { SafeUrlPipe } from '../../shared/safe-url-pipe/safe-url-pipe';
+import { LoadingService } from '../../shared/loading-service/loading-service';
 
 @Component({
   selector: 'dt-location-page',
@@ -18,7 +19,7 @@ import { SafeUrlPipe } from '../../shared/safe-url-pipe/safe-url-pipe';
 export class LocationPage {
   private readonly locationService = inject(LocationService);
   private readonly messageService = inject(MessageService);
-  // private readonly loadingService = inject(LoadingService);
+  private readonly loadingService = inject(LoadingService);
 
   protected data = signal<LocationData | undefined>(undefined);
   protected printableData = computed(() => this.data() ? JSON.stringify(this.data(), null, 2) : undefined);
@@ -32,7 +33,7 @@ export class LocationPage {
   });
 
   protected async getLocation() {
-    // this.isLoading = true;
+    this.loadingService.show();
     try {
       const data = await this.locationService.getLocation();
       this.data.set(data);
@@ -43,7 +44,7 @@ export class LocationPage {
         this.messageService.showError("Unexpected error getting geolocation!");
       }
     } finally {
-      // this.isLoading = false;
+      this.loadingService.hide();
     }
   }
 }

@@ -12,6 +12,7 @@ import { AsyncPipe } from '@angular/common';
 import { ComponentNav } from '../component-nav/component-nav';
 import { ComponentHeader } from '../component-header/component-header';
 import { Navbar } from '../navbar/navbar';
+import { Loading } from '../shared/loading/loading';
 
 const SMALL_WIDTH_BREAKPOINT = 959;
 
@@ -26,7 +27,8 @@ const SMALL_WIDTH_BREAKPOINT = 959;
     AsyncPipe,
     ComponentNav,
     ComponentHeader,
-    Navbar
+    Navbar,
+    Loading
   ],
   templateUrl: './layout.html',
   styleUrl: './layout.scss',
