@@ -1,13 +1,19 @@
-<button mat-raised-button color="primary" (click)="getLocation()">Get location</button>
-@if (printableData()) {
-  <div class="output-container">
-    <dt-clipboard-output [output]="printableData()"></dt-clipboard-output>
-  </div>
-}
-@if (mapUrl()) {
-  <iframe
-    [src]="mapUrl() | safeUrl"
-    class="map"
-    loading="lazy">
-  </iframe>
-}
+<h1>Location</h1>
+<mat-divider></mat-divider>
+
+<div class="location-container">
+  <button mat-raised-button color="primary" (click)="getLocation()">Get location</button>
+  @if (printableData()) {
+    <div class="output-container">
+      <dt-clipboard-output [output]="printableData()"></dt-clipboard-output>
+    </div>
+  }
+  @if (mapUrl()) {
+    <iframe
+      [src]="mapUrl() | safeUrl"
+      class="map"
+      loading="lazy">
+    </iframe>
+  }
+</div>
+

@@ -5,13 +5,15 @@ import { MessageService } from '../../shared/message-service/message-service';
 import { ClipboardOutput } from '../../shared/clipboard-output/clipboard-output';
 import { SafeUrlPipe } from '../../shared/safe-url-pipe/safe-url-pipe';
 import { LoadingService } from '../../shared/loading-service/loading-service';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'dt-location-page',
   imports: [
     MatButtonModule,
     ClipboardOutput,
-    SafeUrlPipe
+    SafeUrlPipe,
+    MatDividerModule
   ],
   templateUrl: './location-page.html',
   styleUrl: './location-page.scss',

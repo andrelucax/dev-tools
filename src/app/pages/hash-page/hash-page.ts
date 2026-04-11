@@ -8,6 +8,7 @@ import { MessageService } from '../../shared/message-service/message-service';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import * as CryptoJS from 'crypto-js';
 import { map, startWith } from 'rxjs';
+import { MatDividerModule } from '@angular/material/divider';
 
 type HashTypes = 'md5' | 'sha1' | 'sha256' | 'sha384' | 'sha512';
 type OutputTypes = 'hex' | 'b64';
@@ -18,7 +19,8 @@ type OutputTypes = 'hex' | 'b64';
     InputSelector,
     MatButtonToggleModule,
     ReactiveFormsModule,
-    ClipboardOutput
+    ClipboardOutput,
+    MatDividerModule
   ],
   templateUrl: './hash-page.html',
   styleUrl: './hash-page.scss',
