@@ -41,7 +41,7 @@ export class OutputSelector {
       case 'b64':
         return Converter.bufferToBase64(Converter.toBytes(this._value()));
       case 'hex':
-        return Converter.bufferToHex(Converter.toBytes(this._value()));
+        return Converter.bufferToHex(Converter.toBytes(this._value())).toUpperCase();
       case 'file':
         return Converter.toBytes(this._value());
       default:
