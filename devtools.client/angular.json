@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "dev-tools": {
+    "devtools.client": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -61,16 +61,23 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "dev-tools:build:production"
+              "buildTarget": "devtools.client:build:production"
             },
             "development": {
-              "buildTarget": "dev-tools:build:development"
+              "buildTarget": "devtools.client:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "proxyConfig": "src/proxy.conf.js",
+            "port": 65497
+          }
         },
         "test": {
-          "builder": "@angular/build:unit-test"
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "karmaConfig": "karma.conf.js"
+          }
         }
       }
     }
