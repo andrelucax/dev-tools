@@ -23,9 +23,9 @@ export class ClipboardOutput {
 
     try {
       await navigator.clipboard.writeText(this.output);
-      this.messageService.showSuccess("Copied to clipboard!");
+      this.messageService.showSuccess("Copied to clipboard");
     } catch {
-      this.messageService.showError("Failed to copy to clipboard!");
+      this.messageService.showError("Failed to copy to clipboard");
     }
   }
 }

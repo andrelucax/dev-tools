@@ -14,7 +14,7 @@ export class LocationService {
   getLocation(): Promise<LocationData> {
     return new Promise((resolve, reject) => {
       if (!navigator.geolocation) {
-        reject(new Error("Geolocation not supported!"));
+        reject(new Error("Geolocation not supported"));
       }
 
       navigator.geolocation.getCurrentPosition(
@@ -28,7 +28,7 @@ export class LocationService {
         },
         (err) => {
           console.error(err);
-          reject(new Error("Failed to get geolocation!"));
+          reject(new Error("Failed to get geolocation"));
         },
         {
           enableHighAccuracy: true,

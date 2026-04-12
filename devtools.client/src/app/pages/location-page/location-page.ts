@@ -43,7 +43,7 @@ export class LocationPage {
       if (err instanceof Error) {
         this.messageService.showError(err.message);
       } else {
-        this.messageService.showError("Unexpected error getting geolocation!");
+        this.messageService.showError("Unexpected error getting geolocation");
       }
     } finally {
       this.loadingService.hide();

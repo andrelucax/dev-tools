@@ -1,2 +1,14 @@
 <h1>User-Agent</h1>
 <mat-divider></mat-divider>
+
+<div class="user-agent-container">
+  <button mat-raised-button color="primary" (click)="getUserAgent()">Get User-Agent</button>
+</div>
+
+@if (model()) {
+  <h3>IP Address</h3>
+  <dt-clipboard-output [output]="model()!.ipAddress"></dt-clipboard-output>
+
+  <h3>User-Agent</h3>
+  <dt-clipboard-output [output]="model()!.raw"></dt-clipboard-output>
+}
