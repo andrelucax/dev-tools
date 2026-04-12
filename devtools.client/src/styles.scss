@@ -62,15 +62,19 @@ dt-navbar {
 }
 
 .snackbar-success {
-  --mat-snack-bar-container-color: #e8f5e9;
-  --mat-snack-bar-supporting-text-color: #1b5e20;
-  --mat-snack-bar-button-color: #2e7d32;
+  --mat-snack-bar-container-color:
+    color-mix(in srgb, var(--mat-sys-primary) 12%, var(--mat-sys-surface-container-high));
+  --mat-snack-bar-supporting-text-color: var(--mat-sys-on-surface);
+  --mat-snack-bar-button-color: var(--mat-sys-primary);
+  border-left: 4px solid var(--mat-sys-primary);
 }
 
 .snackbar-error {
-  --mat-snack-bar-container-color: #ffebee;
-  --mat-snack-bar-supporting-text-color: #b71c1c;
-  --mat-snack-bar-button-color: #d32f2f;
+  --mat-snack-bar-container-color:
+    color-mix(in srgb, var(--mat-sys-error) 14%, var(--mat-sys-surface-container-high));
+  --mat-snack-bar-supporting-text-color: var(--mat-sys-on-surface);
+  --mat-snack-bar-button-color: var(--mat-sys-error);
+  border-left: 4px solid var(--mat-sys-error);
 }
 
 .loading-container {

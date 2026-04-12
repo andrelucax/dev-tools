@@ -84,10 +84,12 @@
   font-size: 12px;
   padding: 4px 8px;
   border-radius: 999px;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: var(--mat-sys-surface-container-high);
   border: 1px solid var(--mat-sys-outline-variant);
+  color: var(--mat-sys-on-surface);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding-left: 24px;
+
 }
