@@ -17,13 +17,13 @@ export interface ComponentItem {
 }
 
 const ITEMS: ComponentItem[] = [
-  {
-    name: 'Clipboard',
-    id: 'clipboard',
-    icon: "copy_all",
-    requiresServer: true,
-    component: ClipboardPage
-  },
+  // {
+  //   name: 'Clipboard',
+  //   id: 'clipboard',
+  //   icon: "copy_all",
+  //   requiresServer: true,
+  //   component: ClipboardPage
+  // },
   {
     name: 'User-Agent',
     id: 'user-agent',
