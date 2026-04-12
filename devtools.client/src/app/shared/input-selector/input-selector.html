@@ -19,10 +19,10 @@
   }
 
   <div class="buttons-container">
-    <button [disabled]="submited" mat-raised-button color="primary" type="button" (click)="submit()">
+    <button [disabled]="submited" matButton type="button" (click)="submit()">
       {{submitButtonText}}
     </button>
-    <button [disabled]="!submited" mat-raised-button color="primary" type="button" (click)="reset()">
+    <button [disabled]="!submited" matButton type="button" (click)="reset()">
       Reset
     </button>
   </div>

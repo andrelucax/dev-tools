@@ -13,14 +13,35 @@ html, body {
 }
 
 html {
-  @include mat.theme( (
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$cyan-palette,
+        tertiary: mat.$orange-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+body {
+  color-scheme: dark;
+}
+
+body.light-mode {
+  color-scheme: light;
+
+  @include mat.theme(
+    (
       color: (
         primary: mat.$azure-palette,
         tertiary: mat.$blue-palette,
       ),
       typography: Roboto,
       density: 0,
-    ) );
+    )
+  );
 }
 
 body {
@@ -64,8 +85,14 @@ dt-navbar {
   display: none;
 }
 
-mat-icon {
+.mat-icon {
   &.mat-warn {
     --mat-icon-color: var(--mat-sys-error);
+  }
+}
+
+.navbar-header {
+  .mat-icon {
+    --mat-icon-color: var(--mat-sidenav-content-text-color, var(--mat-sys-on-background));
   }
 }

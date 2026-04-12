@@ -1,3 +1,10 @@
 <nav class="navbar-header">
-  navbar works
+  <div class="refs">
+      <a href="https://github.com/andrelucax/dev-tools" aria-label="Github link">github</a>
+      <span>•</span>
+      <a href="https://portfolio.andrelucax.com/" aria-label="andrelucax portfolio">andrelucax</a>
+  </div>
+  <button mat-icon-button (click)="toggleDarkMode()">
+      <mat-icon>{{theme() == 'light' ? 'dark_mode' : 'light_mode'}}</mat-icon>
+  </button>
 </nav>

@@ -3,11 +3,13 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { map } from 'rxjs';
 import { NavigationFocusService } from '../../shared/navigation-focus-service/navigation-focus-service';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'dt-home-page',
   imports: [
-    RouterOutlet
+    RouterOutlet,
+    MatDividerModule
   ],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',

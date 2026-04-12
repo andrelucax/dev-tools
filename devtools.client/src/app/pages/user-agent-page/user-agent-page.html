@@ -2,7 +2,7 @@
 <mat-divider></mat-divider>
 
 <div class="user-agent-container">
-  <button [disabled]="model()" mat-raised-button color="primary" (click)="getUserAgent()">Get User-Agent</button>
+  <button [disabled]="model()" matButton (click)="getUserAgent()">Get User-Agent</button>
 </div>
 
 @if (model()) {

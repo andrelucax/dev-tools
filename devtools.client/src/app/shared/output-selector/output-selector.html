@@ -13,7 +13,7 @@
   @if (output()) {
     <h4>Output length: {{output().length}}</h4>
     @if (form.controls.encodingType.value == 'file') {
-      <button mat-raised-button color="primary" (click)="downloadFile()">
+      <button matButton (click)="downloadFile()">
         Download
       </button>
     } @else {
