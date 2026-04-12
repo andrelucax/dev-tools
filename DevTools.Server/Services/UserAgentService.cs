@@ -26,7 +26,9 @@ namespace DevTools.Server.Services
 
             var userAgent = request?.Headers["User-Agent"].ToString() ?? string.Empty;
 
-            var ip = context?.Connection.RemoteIpAddress?.ToString() ?? string.Empty;
+            var ip = request?.Headers["X-Forwarded-For"].FirstOrDefault()
+                ?? context?.Connection.RemoteIpAddress?.ToString()
+                ?? string.Empty;
 
             return new UserAgentModel
             {
