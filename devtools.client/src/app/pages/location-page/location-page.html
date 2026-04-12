@@ -2,7 +2,7 @@
 <mat-divider></mat-divider>
 
 <div class="location-container">
-  <button mat-raised-button color="primary" (click)="getLocation()">Get location</button>
+  <button [disabled]="data()" mat-raised-button color="primary" (click)="getLocation()">Get location</button>
   @if (printableData()) {
     <div class="output-container">
       <dt-clipboard-output [output]="printableData()"></dt-clipboard-output>
