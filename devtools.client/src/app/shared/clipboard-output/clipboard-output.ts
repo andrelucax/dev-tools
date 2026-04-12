@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MessageService } from '../message-service/message-service';
@@ -15,6 +15,18 @@ import { MessageService } from '../message-service/message-service';
 export class ClipboardOutput {
   @Input({required: true}) output?: string;
 
+  protected _secret = signal<boolean>(false);
+  @Input()
+  set secret(v: boolean) {
+    this._secret.set(v);
+
+    if (v) {
+      this.hidden = true;
+    }
+  }
+
+  protected hidden = this._secret();
+
   private readonly messageService = inject(MessageService);
 
   protected async copyToClipboard() {
@@ -27,5 +39,9 @@ export class ClipboardOutput {
     } catch {
       this.messageService.showError("Failed to copy to clipboard");
     }
+  }
+
+  protected toggleHidden() {
+    this.hidden = !this.hidden;
   }
 }

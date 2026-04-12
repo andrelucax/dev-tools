@@ -7,7 +7,7 @@
 
 @if (model()) {
   <h3>IP Address</h3>
-  <dt-clipboard-output [output]="model()!.ipAddress"></dt-clipboard-output>
+  <dt-clipboard-output [secret]="true" [output]="model()!.ipAddress"></dt-clipboard-output>
 
   <h3>User-Agent</h3>
   <dt-clipboard-output [output]="model()!.raw"></dt-clipboard-output>

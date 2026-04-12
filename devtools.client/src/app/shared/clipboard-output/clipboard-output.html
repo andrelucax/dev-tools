@@ -1,6 +1,11 @@
 <div class="output-container">
   @if (output) {
-    <button mat-mini-fab (click)="copyToClipboard()"><mat-icon>content_copy</mat-icon></button>
-    <pre class="output-text">{{output}}</pre>
+    <div class="button-container">
+      @if (_secret()) {
+        <button mat-mini-fab (click)="toggleHidden()"><mat-icon>{{hidden ? 'visibility_off' : 'visibility'}}</mat-icon></button>
+      }
+      <button mat-mini-fab (click)="copyToClipboard()"><mat-icon>content_copy</mat-icon></button>
+    </div>
+    <pre class="output-text">{{hidden ? '●●●●●●●●●●●●' : output}}</pre>
   }
 </div>
