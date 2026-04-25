@@ -1,3 +1,4 @@
+using DevTools.Server.Classes;
 using DevTools.Server.Configuration;
 using DevTools.Server.Entities;
 using DevTools.Server.Services;
@@ -20,6 +21,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
+
+app.UseMiddleware<ApiExceptionMiddleware>();
 
 using (var scope = app.Services.CreateScope())
 {
