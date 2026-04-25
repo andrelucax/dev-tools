@@ -46,7 +46,7 @@ export class MessageService {
   }
 
   showError(message: string) {
-    this.message$.next({ type: 'success', message, duration: 0 });
+    this.message$.next({ type: 'error', message, duration: 0 });
   }
 
   private show(msg: MessageEvent) {
