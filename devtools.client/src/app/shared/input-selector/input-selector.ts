@@ -139,19 +139,19 @@ export class InputSelector {
         return;
       }
 
-      this.form.disable();
+      this.form.disable({ emitEvent: false });
       this.valueSubmited.emit({ file: file, encoding: encodingType });
       return;
     }
 
     let value = this.form.value.inputValue!;
 
-    this.form.disable();
+    this.form.disable({ emitEvent: false });
     this.valueSubmited.emit({ text: value, encoding: encodingType });
   }
 
   protected reset() {
-    this.form.enable();
+    this.form.enable({ emitEvent: false });
     this.valueReseted.emit();
   }
 }
