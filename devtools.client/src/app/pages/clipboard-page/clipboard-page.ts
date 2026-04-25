@@ -117,6 +117,7 @@ export class ClipboardPage implements OnInit {
   }
 
   private setData(data: ClipboardModel) {
+    this.form.controls.code.setValue(data.code);
     this.model.set(data);
     this.setCodeUrl(data);
     this.form.disable();
