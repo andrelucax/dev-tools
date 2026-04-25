@@ -51,7 +51,7 @@ namespace DevTools.Server.Services
                 DateCreated = DateTimeOffset.Now,
             };
 
-            if (!string.IsNullOrEmpty(request.Text))
+            if (!string.IsNullOrWhiteSpace(request.Text))
             {
                 clipboard.Text = request.Text;
             } else if (request.File is not null && request.File.Length > 0)
