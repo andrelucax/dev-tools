@@ -27,15 +27,24 @@ namespace DevTools.Server.Services
 
                 var config = new AmazonS3Config
                 {
-                    ServiceURL = blobStorageConfig.ServiceUrl,
                     ForcePathStyle = blobStorageConfig.ForcePathStyle,
                 };
 
-                return new AmazonS3Client(
-                    blobStorageConfig.AccessKey,
-                    blobStorageConfig.SecretKey,
-                    config
-                );
+                if (!string.IsNullOrWhiteSpace(blobStorageConfig.ServiceUrl))
+                {
+                    config.ServiceURL = blobStorageConfig.ServiceUrl;
+                }
+
+                if (!string.IsNullOrWhiteSpace(blobStorageConfig.AccessKey))
+                {
+                    return new AmazonS3Client(
+                        blobStorageConfig.AccessKey,
+                        blobStorageConfig.SecretKey,
+                        config
+                    );
+                }
+
+                return new AmazonS3Client(config);
             });
 
             services.AddSingleton<IBlobStorageService, BlobStorageService>();
