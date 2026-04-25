@@ -23,11 +23,30 @@
 
 @if (model()) {
   <div class="clipboard-output-container">
-    <dt-clipboard-output [output]="model()!.code | clipboardCode"></dt-clipboard-output>
+    <div class="clipboard-output-content">
+      <h3>Code</h3>
+      <dt-clipboard-output [output]="model()!.code | clipboardCode"></dt-clipboard-output>
+    </div>
+    @if (model()!.copyUrl) {
+      <div class="clipboard-output-content">
+        <h3>Copy URL</h3>
+        <dt-clipboard-output [output]="model()!.copyUrl!"></dt-clipboard-output>
+      </div>
+    }
+
   </div>
-  @if (model()!.copyUrl) {
-    <div class="clipboard-output-container">
-      <dt-clipboard-output [output]="model()!.copyUrl!"></dt-clipboard-output>
+  @if (model()!.text) {
+    <div class="clipboard-output-content">
+      <h3>Text</h3>
+      <dt-clipboard-output [output]="model()!.text!"></dt-clipboard-output>
+    </div>
+  }
+  @if (model()!.fileUrl) {
+    <div class="clipboard-output-content">
+      <h3>File</h3>
+      <a matButton [href]="model()!.fileUrl" download>
+        Download
+      </a>
     </div>
   }
 }

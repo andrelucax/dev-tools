@@ -30,7 +30,7 @@ namespace DevTools.Server.Services
                     ? new Uri(generalConfig.Value.SiteUri, $"/clipboard?code={clipboard.Code}").ToString()
                     : null,
                 Text = clipboard.Text,
-                FileUrl = clipboard.BlobId.HasValue ? $"/api/clipboards/{clipboard.Id}/file" : null
+                FileUrl = clipboard.BlobId.HasValue ? $"/api/clipboards/{clipboard.Code}/file" : null
             };
     }
 }

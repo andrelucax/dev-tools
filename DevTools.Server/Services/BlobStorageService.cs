@@ -8,6 +8,8 @@ namespace DevTools.Server.Services
 
     public interface IBlobStorageService
     {
+        Task<Stream> GetAsync(string folder, string key, CancellationToken ct = default);
+
         Task PutAsync(string folder, string key, Stream stream, CancellationToken ct = default);
 
         Task DeleteAsync(string folder, string key, CancellationToken ct = default);
@@ -59,6 +61,19 @@ namespace DevTools.Server.Services
             };
 
             await s3.DeleteObjectAsync(request, ct);
+        }
+
+        public async Task<Stream> GetAsync(string folder, string key, CancellationToken ct = default)
+        {
+            var request = new GetObjectRequest
+            {
+                BucketName = blobStorageConfig.Value.BucketName,
+                Key = formatKey(folder, key)
+            };
+
+            var response = await s3.GetObjectAsync(request);
+
+            return response.ResponseStream;
         }
 
         private string formatKey(string folder, string key)

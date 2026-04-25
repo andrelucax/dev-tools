@@ -1,5 +1,6 @@
 ﻿using Amazon.S3;
 using DevTools.Server.Configuration;
+using DevTools.Server.Repositories;
 using Microsoft.Extensions.Options;
 
 namespace DevTools.Server.Services
@@ -13,6 +14,8 @@ namespace DevTools.Server.Services
 
             services.AddScoped<IUserAgentService, UserAgentService>();
             services.AddScoped<IClipboardService, ClipboardService>();
+
+            services.AddScoped<IClipboardRepository, ClipboardRepository>();
 
             return services;
         }

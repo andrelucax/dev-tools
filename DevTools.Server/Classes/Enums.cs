@@ -5,6 +5,7 @@
     {
         ClipboardNotFound,
         InvalidClipboardRequest,
+        ClipboardNoBlob,
     }
 
     public enum BlobStorageFolders
