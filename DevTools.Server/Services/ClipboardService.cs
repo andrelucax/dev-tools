@@ -53,11 +53,19 @@ namespace DevTools.Server.Services
                 clipboard.Text = request.Text;
             } else if (request.File is not null)
             {
+                if (string.IsNullOrWhiteSpace(request.File.Name) || string.IsNullOrWhiteSpace(request.File.ContentType))
+                {
+                    throw new ApiException(ErrorCodes.InvalidClipboardRequest, $"File '{request.File.Name}' or '{nameof(request.File.ContentType)}' are empty.");
+                }
+
                 clipboard.BlobId = Guid.NewGuid();
+                clipboard.FileName = request.File.Name;
+                clipboard.ContentType = request.File.ContentType;
+
                 await blobStorageService.PutAsync(BlobStorageFolders.Clipboards, clipboard.BlobId.Value, request.File!.Base64);
             } else
             {
-                throw new ApiException(ErrorCodes.InvalidClipboardRequest, $"Both '{nameof(request.File)}' and '{nameof(request.Text)}' are empty");
+                throw new ApiException(ErrorCodes.InvalidClipboardRequest, $"Both '{nameof(request.File)}' and '{nameof(request.Text)}' are empty.");
             }
 
             dbContext.Add(clipboard);
@@ -76,7 +84,7 @@ namespace DevTools.Server.Services
 
             var stream = await blobStorageService.GetAsync(BlobStorageFolders.Clipboards, clipboard.BlobId.Value);
 
-            return (stream, "application/octet-stream", clipboard.BlobId.Value.ToString());
+            return (stream, clipboard.ContentType!, clipboard.FileName!);
         }
     }
 }

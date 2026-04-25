@@ -33,8 +33,8 @@ namespace DevTools.Server.Services
                 Text = clipboard.Text,
                 File = clipboard.BlobId.HasValue
                     ? new FileModel() {
-                        Name = clipboard.BlobId.Value.ToString(),
-                        ContentType = "application/octet-stream",
+                        Name = clipboard.FileName!,
+                        ContentType = clipboard.ContentType!,
                         Url = $"/api/clipboards/{clipboard.Code}/file",
                     }
                     : null

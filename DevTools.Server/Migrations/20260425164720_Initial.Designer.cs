@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DevTools.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260425011731_Initial")]
+    [Migration("20260425164720_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -39,8 +39,16 @@ namespace DevTools.Server.Migrations
                         .HasMaxLength(6)
                         .HasColumnType("character varying(6)");
 
+                    b.Property<string>("ContentType")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
                     b.Property<DateTime>("DateCreatedUtc")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("FileName")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
 
                     b.Property<string>("Text")
                         .HasColumnType("text");

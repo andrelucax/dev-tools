@@ -19,6 +19,8 @@ namespace DevTools.Server.Migrations
                     Code = table.Column<string>(type: "character varying(6)", maxLength: 6, nullable: false),
                     Text = table.Column<string>(type: "text", nullable: true),
                     BlobId = table.Column<Guid>(type: "uuid", nullable: true),
+                    FileName = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    ContentType = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
                     DateCreatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>

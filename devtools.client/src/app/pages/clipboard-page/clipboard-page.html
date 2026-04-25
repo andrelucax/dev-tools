@@ -44,9 +44,12 @@
   @if (model()!.file?.url) {
     <div class="clipboard-output-content">
       <h3>File</h3>
-      <a matButton [href]="model()!.file!.url" download>
-        Download
-      </a>
+      <div class="download-file-container">
+        <a matButton [href]="model()!.file!.url" download>
+          Download
+        </a>
+        <span>{{model()!.file!.name}}</span>
+      </div>
     </div>
   }
 }
