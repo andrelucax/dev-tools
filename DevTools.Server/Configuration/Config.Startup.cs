@@ -4,11 +4,13 @@
     {
         public const string General = "General";
         public const string BlobStorage = "BlobStorage";
+        public const string Database = "Database";
 
         public static IServiceCollection AddAppConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<GeneralConfig>(configuration.GetSection(General));
             services.Configure<BlobStorageConfig>(configuration.GetSection(BlobStorage));
+            services.Configure<DatabaseConfig>(configuration.GetSection(Database));
 
             return services;
         }

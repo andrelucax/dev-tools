@@ -20,7 +20,7 @@ namespace DevTools.Server.Services
             return services;
         }
 
-        public static IServiceCollection AddBlobStorage(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddBlobStorage(this IServiceCollection services)
         {
             services.AddSingleton<IAmazonS3>(sp =>
             {

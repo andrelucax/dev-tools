@@ -13,12 +13,10 @@ builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services
-    .AddBlobStorage(builder.Configuration)
+    .AddAppConfiguration(builder.Configuration)
+    .AddBlobStorage()
     .AddAppServices()
-    .AddAppConfiguration(builder.Configuration);
-
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    .AddAppDbContext(builder.Configuration);
 
 var app = builder.Build();
 
@@ -27,7 +25,11 @@ app.UseMiddleware<ApiExceptionMiddleware>();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();
+
+    if (db.HasMigrations)
+    {
+        db.Database.Migrate();
+    }
 }
 
 app.UseDefaultFiles();
