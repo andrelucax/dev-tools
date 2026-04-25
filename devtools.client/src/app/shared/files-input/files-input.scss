@@ -68,9 +68,11 @@
   font-size: 14px;
   color: var(--mat-sys-on-surface-variant);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   min-height: 150px;
   align-items: center;
+  gap: 10px;
 }
 
 .file-list {
@@ -91,5 +93,14 @@
   align-items: center;
   justify-content: space-between;
   padding-left: 24px;
+}
 
+.files-input-divider {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-color: var(--mat-sys-on-primary);
+}
+
+.disabled-text {
+  color: var(--mat-form-field-filled-disabled-label-text-color, color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent));
 }

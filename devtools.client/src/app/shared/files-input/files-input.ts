@@ -4,13 +4,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { DragAndDrop } from './drag-and-drop';
 import { FileRequest } from '../../api/files';
+import { MatDivider } from '@angular/material/divider';
 
 @Component({
   selector: 'dt-files-input',
   imports: [
     MatButtonModule,
     MatIconModule,
-    DragAndDrop
+    DragAndDrop,
+    MatDivider
   ],
   templateUrl: './files-input.html',
   styleUrl: './files-input.scss',

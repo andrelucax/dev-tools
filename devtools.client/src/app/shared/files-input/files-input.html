@@ -12,35 +12,52 @@
 
     <div class="file-box-overlay"></div>
 
-    <input [disabled]="disabled" type="file" [multiple]="!single" (click)="fileTouched()" (change)="fileSelected($event)" class="hidden" />
+    <input #fileInput [disabled]="disabled" type="file" [multiple]="!single" (click)="fileTouched()" (change)="fileSelected($event)" class="hidden" />
 
     <div class="file-content">
-      @if (form.value.files && form.value.files.length > 0) {
-        <div class="file-list">
-          @for (file of form.value.files; track $index; let i = $index) {
-            <span class="file-item">
-              {{ file.name }}
-              <button [disabled]="disabled" type="button" (click)="removeFile(i)" mat-icon-button>
-                <mat-icon [color]="disabled ? null : 'warn'">
-                  delete
-                </mat-icon>
-              </button>
-            </span>
+      <div class="file-placeholder">
+        <button [disabled]="disabled" matMiniFab type="button" (click)="fileInput.click()">
+          @if (single && form.controls.files.length > 0) {
+            <mat-icon>swap_vert</mat-icon>
+          } @else {
+            <mat-icon>add</mat-icon>
           }
-        </div>
-      } @else {
-        <div class="file-placeholder">
+        </button>
+
+        <span [class.disabled-text]="disabled">
           @if (single) {
-            Click or drag and drop to select file
+            @if (form.controls.files.length > 0) {
+              Click or drag and drop to swap file
+            } @else {
+              Click or drag and drop to select file
+            }
           } @else {
             Click or drag and drop to select files
           }
-        </div>
-      }
+        </span>
+      </div>
 
     </div>
 
+    @if (form.value.files && form.value.files.length > 0) {
+      <mat-divider class="files-input-divider"></mat-divider>
+
+      <div class="file-list">
+        @for (file of form.value.files; track $index; let i = $index) {
+          <span class="file-item">
+            {{ file.name }}
+            <button [disabled]="disabled" type="button" (click)="removeFile(i)" mat-icon-button>
+              <mat-icon [color]="disabled ? null : 'warn'">
+                delete
+              </mat-icon>
+            </button>
+          </span>
+        }
+      </div>
+    }
+
   </label>
+
 </div>
 
 
