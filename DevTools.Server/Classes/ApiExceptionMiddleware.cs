@@ -24,7 +24,8 @@
 
                 var response = new
                 {
-                    error = ex.Message
+                    errorCode = ex.ErrorCode.ToString(),
+                    errorMessage = ex.ErrorMessage,
                 };
 
                 await context.Response.WriteAsJsonAsync(response);

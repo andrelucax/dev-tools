@@ -15,7 +15,7 @@ export const apiErrorInterceptor: HttpInterceptorFn = (req, next) => {
     catchError((err) => {
 
       if (err.status === 422) {
-        messageService.showError(err.error?.error ?? 'Unkown exception');
+        messageService.showError(err.error?.errorMessage ?? 'Unkown exception');
       }
 
       return throwError(() => err);

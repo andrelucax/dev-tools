@@ -36,7 +36,7 @@ namespace DevTools.Server.Services
 
             if (clipboard == null)
             {
-                throw new ApiException(ErrorCodes.ClipboardNotFound, $"Clipboard with code {code} not found.");
+                throw new ApiException(ErrorCodes.ClipboardNotFound, $"Clipboard with code '{code}' not found.");
             }
 
             return mc.ToModel(clipboard);
@@ -60,7 +60,7 @@ namespace DevTools.Server.Services
                 await blobStorageService.PutAsync(BlobStorageFolders.Clipboards, clipboard.BlobId.Value, request.File!);
             } else
             {
-                throw new ApiException(ErrorCodes.InvalidClipboardRequest, $"Both {nameof(request.File)} and {nameof(request.Text)} are empty");
+                throw new ApiException(ErrorCodes.InvalidClipboardRequest, $"Both '{nameof(request.File)}' and '{nameof(request.Text)}' are empty");
             }
 
             dbContext.Add(clipboard);
