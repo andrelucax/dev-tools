@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FilesInput } from '../files-input/files-input';
 import { EncodedInput, InputEncodingFormat } from '../converter/converter';
+import { FileRequest } from '../../api/files';
 
 @Component({
   selector: 'dt-input-selector',
@@ -51,7 +52,7 @@ export class InputSelector {
       nonNullable: true,
       validators: [Validators.required]
     }),
-    inputFile: this.fb.control<string[] | null>(null)
+    inputFile: this.fb.control<FileRequest[] | null>(null)
   });
 
   private hexValidator(): ValidatorFn {
@@ -129,7 +130,6 @@ export class InputSelector {
       return;
     }
 
-    let value = this.form.value.inputValue!;
     const encodingType = this.form.value.encodingType!;
     if (encodingType == 'file') {
       const file = this.form.value.inputFile?.[0];
@@ -139,11 +139,15 @@ export class InputSelector {
         return;
       }
 
-      value = file;
+      this.form.disable();
+      this.valueSubmited.emit({ file: file, encoding: encodingType });
+      return;
     }
 
+    let value = this.form.value.inputValue!;
+
     this.form.disable();
-    this.valueSubmited.emit({ value: value, encoding: encodingType });
+    this.valueSubmited.emit({ text: value, encoding: encodingType });
   }
 
   protected reset() {

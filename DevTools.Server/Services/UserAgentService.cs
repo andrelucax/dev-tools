@@ -1,4 +1,4 @@
-﻿using DevTools.Api.UserAgent;
+﻿using DevTools.Api.UserAgents;
 
 namespace DevTools.Server.Services
 {

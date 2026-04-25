@@ -1,4 +1,5 @@
-﻿using DevTools.Api.Clipboard;
+﻿using DevTools.Api.Clipboards;
+using DevTools.Api.Files;
 using DevTools.Server.Configuration;
 using DevTools.Server.Entities;
 using Microsoft.Extensions.Options;
@@ -30,7 +31,13 @@ namespace DevTools.Server.Services
                     ? new Uri(generalConfig.Value.SiteUri, $"/clipboard?code={clipboard.Code}").ToString()
                     : null,
                 Text = clipboard.Text,
-                FileUrl = clipboard.BlobId.HasValue ? $"/api/clipboards/{clipboard.Code}/file" : null
+                File = clipboard.BlobId.HasValue
+                    ? new FileModel() {
+                        Name = clipboard.BlobId.Value.ToString(),
+                        ContentType = "application/octet-stream",
+                        Url = $"/api/clipboards/{clipboard.Code}/file",
+                    }
+                    : null
             };
     }
 }

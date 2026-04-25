@@ -1,4 +1,4 @@
-﻿using DevTools.Api.Clipboard;
+﻿using DevTools.Api.Clipboards;
 using DevTools.Server.Classes;
 using DevTools.Server.Entities;
 using DevTools.Server.Repositories;
@@ -51,10 +51,10 @@ namespace DevTools.Server.Services
             if (!string.IsNullOrWhiteSpace(request.Text))
             {
                 clipboard.Text = request.Text;
-            } else if (request.File is not null && request.File.Length > 0)
+            } else if (request.File is not null)
             {
                 clipboard.BlobId = Guid.NewGuid();
-                await blobStorageService.PutAsync(BlobStorageFolders.Clipboards, clipboard.BlobId.Value, request.File!);
+                await blobStorageService.PutAsync(BlobStorageFolders.Clipboards, clipboard.BlobId.Value, request.File!.Base64);
             } else
             {
                 throw new ApiException(ErrorCodes.InvalidClipboardRequest, $"Both '{nameof(request.File)}' and '{nameof(request.Text)}' are empty");

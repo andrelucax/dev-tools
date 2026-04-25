@@ -1,8 +1,11 @@
+import { FileRequest } from "../../api/files";
+
 export type InputEncodingFormat = 'utf8' | 'b64' | 'hex' | 'file';
 export type OutputEncodingFormat = 'b64' | 'hex' | 'file';
 
 export interface EncodedInput {
-  value: string;
+  text?: string | null;
+  file?: FileRequest | null;
   encoding: InputEncodingFormat;
 }
 
@@ -15,15 +18,15 @@ export class Converter {
   static toBytes(input: EncodedInput): Uint8Array {
     switch (input.encoding) {
       case 'utf8':
-        return new TextEncoder().encode(input.value);
+        return new TextEncoder().encode(input.text!);
       case 'b64': {
-        const binary = atob(input.value);
+        const binary = atob(input.text!);
         return Uint8Array.from(binary, c => c.charCodeAt(0));
       }
       case 'hex':
-        return this.hexToBytes(input.value);
+        return this.hexToBytes(input.text!);
       case 'file':
-        const binary = atob(input.value);
+        const binary = atob(input.file!.base64);
         return Uint8Array.from(binary, c => c.charCodeAt(0));
       default:
         throw new Error("Not implemented");

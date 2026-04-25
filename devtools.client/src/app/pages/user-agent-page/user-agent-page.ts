@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { UserAgentService } from './user-agent-service/user-agent-service';
 import { LoadingService } from '../../shared/loading-service/loading-service';
-import { UserAgentModel } from '../../api/user-agent';
+import { UserAgentModel } from '../../api/user-agents';
 import { MessageService } from '../../shared/message-service/message-service';
 import { finalize } from 'rxjs';
 import { ClipboardOutput } from '../../shared/clipboard-output/clipboard-output';

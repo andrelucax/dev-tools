@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { UserAgentModel } from '../../../api/user-agent';
+import { UserAgentModel } from '../../../api/user-agents';
 
 const apiRoute = '/api/user-agent';
 

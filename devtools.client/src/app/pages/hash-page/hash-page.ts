@@ -35,7 +35,7 @@ export class HashPage {
   protected outputValue = computed(() => {
     const value = this.value();
     const output: EncodedInput = {
-      value: value,
+      text: value,
       encoding: 'hex'
     }
     return output;

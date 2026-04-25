@@ -1,4 +1,4 @@
-using DevTools.Api.Clipboard;
+using DevTools.Api.Clipboards;
 using DevTools.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,4 +1,4 @@
-using DevTools.Api.UserAgent;
+using DevTools.Api.UserAgents;
 using DevTools.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 

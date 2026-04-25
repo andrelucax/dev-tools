@@ -1,4 +1,6 @@
-﻿namespace DevTools.Api.Clipboard
+﻿using DevTools.Api.Files;
+
+namespace DevTools.Api.Clipboards
 {
     public class ClipboardModel
     {
@@ -9,6 +11,6 @@
 
         public string? Text { get; set; }
 
-        public string? FileUrl { get; set; }
+        public FileModel? File { get; set; }
     }
 }

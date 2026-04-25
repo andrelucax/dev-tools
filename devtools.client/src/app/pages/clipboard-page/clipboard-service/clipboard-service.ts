@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { ClipboardModel, ClipboardRequest } from '../../../api/clipboard';
+import { ClipboardModel, ClipboardRequest } from '../../../api/clipboards';
 
 const apiRoute = '/api/clipboards';
 

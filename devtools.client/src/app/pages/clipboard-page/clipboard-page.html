@@ -41,10 +41,10 @@
       <dt-clipboard-output [output]="model()!.text!"></dt-clipboard-output>
     </div>
   }
-  @if (model()!.fileUrl) {
+  @if (model()!.file?.url) {
     <div class="clipboard-output-content">
       <h3>File</h3>
-      <a matButton [href]="model()!.fileUrl" download>
+      <a matButton [href]="model()!.file!.url" download>
         Download
       </a>
     </div>

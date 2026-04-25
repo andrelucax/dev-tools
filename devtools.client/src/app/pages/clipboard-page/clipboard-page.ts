@@ -2,7 +2,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { InputSelector } from '../../shared/input-selector/input-selector';
 import { EncodedInput } from '../../shared/converter/converter';
-import { ClipboardModel, ClipboardRequest } from '../../api/clipboard';
+import { ClipboardModel, ClipboardRequest } from '../../api/clipboards';
 import { ClipboardService } from './clipboard-service/clipboard-service';
 import { finalize } from 'rxjs';
 import { LoadingService } from '../../shared/loading-service/loading-service';
@@ -64,8 +64,8 @@ export class ClipboardPage implements OnInit {
 
   protected setInput(input: EncodedInput) {
     const request: ClipboardRequest = {
-      text: input.encoding == 'utf8' ? input.value : null,
-      file: input.encoding == 'file' ? input.value : null,
+      text: input.encoding == 'utf8' ? input.text! : null,
+      file: input.encoding == 'file' ? input.file! : null,
     };
 
     this.loadingService.show();

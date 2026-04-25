@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, ControlValueAccessor, NgControl } from '@angu
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { DragAndDrop } from './drag-and-drop';
+import { FileRequest } from '../../api/files';
 
 @Component({
   selector: 'dt-files-input',
@@ -88,13 +89,13 @@ export class FilesInput implements ControlValueAccessor {
     }
   }
 
-  private onChange: (value: string[] | null) => void = () => { };
+  private onChange: (value: FileRequest[] | null) => void = () => { };
   private onTouched: () => void = () => { };
   protected disabled = false;
 
-  value: string[] | null = null;
+  value: FileRequest[] | null = null;
 
-  writeValue(value: string[] | null): void {
+  writeValue(value: FileRequest[] | null): void {
     this.value = value ?? null;
   }
 
@@ -112,18 +113,18 @@ export class FilesInput implements ControlValueAccessor {
 
   private async setFileUpdated(files: File[] | null) {
     if (files) {
-      this.writeValue(await this.toBase64(files));
+      this.writeValue(await this.toModel(files));
     } else {
       this.writeValue(null);
     }
     this.onChange(this.value);
   }
 
-  private toBase64(files: File[]) {
-    return Promise.all(files.map(f => this.fileToBase64(f)));
+  private toModel(files: File[]) {
+    return Promise.all(files.map(f => this.fileToFileRequest(f)));
   }
 
-  private fileToBase64(file: File): Promise<string> {
+  private fileToFileRequest(file: File): Promise<FileRequest> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
 
@@ -131,7 +132,12 @@ export class FilesInput implements ControlValueAccessor {
 
       reader.onload = () => {
         const result = reader.result as string;
-        resolve(result.split(',')[1]);
+        const model: FileRequest = {
+          name: file.name,
+          contentType: file.type,
+          base64: result.split(',')[1],
+        };
+        resolve(model);
       };
 
       reader.onerror = reject;
