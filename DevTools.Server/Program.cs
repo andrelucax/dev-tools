@@ -12,6 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services
+    .AddBlobStorage(builder.Configuration)
     .AddAppServices()
     .AddAppConfiguration(builder.Configuration);
 
