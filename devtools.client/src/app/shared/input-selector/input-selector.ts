@@ -1,4 +1,4 @@
-import { Component, computed, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, computed, effect, EventEmitter, inject, input, Input, Output } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -29,6 +29,7 @@ export class InputSelector {
   @Output() valueReseted = new EventEmitter<null>();
   @Input() allowedTypes: InputEncodingFormat[] = ['utf8', 'b64', 'hex', 'file'];
   @Input() submitButtonText = "Submit";
+  disable = input(false);
 
   private readonly encodingTypes: { label: string; value: InputEncodingFormat }[] = [
     { label: 'Base64', value: 'b64' },
@@ -40,8 +41,6 @@ export class InputSelector {
   protected filteredEncodingTypes = computed(() =>
     this.encodingTypes.filter(t => this.allowedTypes.includes(t.value))
   );
-
-  protected submited = false;
 
   protected form = this.fb.group({
     encodingType: this.fb.control<InputEncodingFormat>('utf8', {
@@ -111,7 +110,17 @@ export class InputSelector {
       }
       this.form.controls.inputValue.updateValueAndValidity();
       this.form.controls.inputFile.updateValueAndValidity();
-    })
+    });
+
+    effect(() => {
+      const isDisabled = this.disable();
+
+      if (isDisabled) {
+        this.form.disable({ emitEvent: false });
+      } else {
+        this.form.enable({ emitEvent: false });
+      }
+    });
   }
 
   protected submit() {
@@ -134,13 +143,11 @@ export class InputSelector {
     }
 
     this.form.disable();
-    this.submited = true;
     this.valueSubmited.emit({ value: value, encoding: encodingType });
   }
 
   protected reset() {
     this.form.enable();
-    this.submited = false;
     this.valueReseted.emit();
   }
 }

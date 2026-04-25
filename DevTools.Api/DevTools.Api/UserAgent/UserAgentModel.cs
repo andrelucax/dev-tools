@@ -1,4 +1,4 @@
-﻿namespace DevTools.Server.Api
+﻿namespace DevTools.Api.UserAgent
 {
     public class UserAgentModel
     {

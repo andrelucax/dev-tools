@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="DevTools.Api/DevTools.Api/DevTools.Api.csproj" Id="e4129081-7d8d-45df-ba45-3875702cd343" />
   <Project Path="devtools.client/devtools.client.esproj">
     <Build />
     <Deploy />

@@ -1,2 +1,33 @@
 <h1>Clipboard</h1>
 <mat-divider></mat-divider>
+
+<h3>Load</h3>
+<div class="load-input-container">
+  <form [formGroup]="form">
+    <mat-form-field>
+      <mat-label>Code</mat-label>
+      <input matInput formControlName="code" dtCodeMask />
+    </mat-form-field>
+  </form>
+  <button [disabled]="form.disabled" matButton type="submit" (click)="load()">Load</button>
+</div>
+
+
+<dt-input-selector
+  (valueSubmited)="setInput($event)"
+  (valueReseted)="resetInput()"
+  submitButtonText="Upload"
+  [allowedTypes]="['utf8', 'file']"
+  [disable]="form.disabled"
+></dt-input-selector>
+
+@if (model()) {
+  <div class="clipboard-output-container">
+    <dt-clipboard-output [output]="model()!.code | clipboardCode"></dt-clipboard-output>
+  </div>
+  @if (model()!.copyUrl) {
+    <div class="clipboard-output-container">
+      <dt-clipboard-output [output]="model()!.copyUrl!"></dt-clipboard-output>
+    </div>
+  }
+}
