@@ -1,4 +1,4 @@
-import { ApplicationConfig, inject, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { ApplicationConfig, inject, provideAppInitializer, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -7,6 +7,7 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { HttpInterceptorFn, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { MessageService } from './shared/message-service/message-service';
 import { catchError, throwError } from 'rxjs';
+import { ConsoleGreetingsService } from './easter-eggs/console-greetings-service/console-greetings-service';
 
 export const apiErrorInterceptor: HttpInterceptorFn = (req, next) => {
   const messageService = inject(MessageService);
@@ -41,6 +42,10 @@ export const appConfig: ApplicationConfig = {
       useValue: {
         subscriptSizing: 'dynamic',
       }
-    }
+    },
+    provideAppInitializer(() => {
+      const service = inject(ConsoleGreetingsService);
+      return service.init();
+    })
   ]
 };
