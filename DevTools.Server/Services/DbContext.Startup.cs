@@ -24,7 +24,7 @@ namespace DevTools.Server.Services
                     break;
                 case "Mongo":
                     services.AddDbContext<MongoDbContext>(options =>
-                        options.UseMongoDB(dbConfig.ConnectionString));
+                        options.UseMongoDB(dbConfig.ConnectionString, dbConfig.DatabaseName));
 
                     services.AddScoped<AppDbContext, MongoDbContext>();
                     break;
