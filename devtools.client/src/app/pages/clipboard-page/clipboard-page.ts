@@ -101,10 +101,6 @@ export class ClipboardPage implements OnInit {
       ).subscribe({
         next: (data) => {
           this.setData(data);
-          this.router.navigate([], {
-            queryParams: { code: data.code },
-            queryParamsHandling: 'merge'
-          });
         },
         error: (err) => {
           console.error(err);
@@ -113,8 +109,16 @@ export class ClipboardPage implements OnInit {
       });
   }
 
+  private setCodeUrl(data: ClipboardModel) {
+    this.router.navigate([], {
+        queryParams: { code: data.code },
+        queryParamsHandling: 'merge'
+      });
+  }
+
   private setData(data: ClipboardModel) {
     this.model.set(data);
+    this.setCodeUrl(data);
     this.form.disable();
   }
 }
